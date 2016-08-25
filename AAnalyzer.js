@@ -64,7 +64,7 @@ var computeAA = function(seq) {
 };
 
 //Prepare data for visualization
-var prepareData = function(result) {
+var prepData = function(result) {
     var data = {
         "Basic": {"H":0, "R":0, "K":0},
         "Nonpolar (Hydrophobic)": {"F":0, "A":0, "L":0, "M":0, "I":0, "W":0, "P":0, "V":0},
@@ -88,5 +88,29 @@ var prepareData = function(result) {
 
     return dataArray;
 };
+
+var prepData2 = function(result) {
+    var basic = {"class":"Basic", "AA":[]};
+    var nonpolar = {"class":"Nonpolar (Hydrophobic)", "AA":[]};
+    var polar = {"class":"Polar, uncharged", "AA":[]};
+    var acidic = {"class":"Acidic", "AA":[]}
+    
+    for (let aa in result) {
+        let _class = classifyAA(aa);
+        if (_class = basic["class"]) {
+            basic["AA"].push({"name":aa, "num":result[aa]});
+        } else if (_class = nonpolar["class"]) {
+            nonpolar["AA"].push({"name":aa, "num":result[aa]});
+        } else if (_class = polar["class"]) {
+            polar["AA"].push({"name":aa, "num":result[aa]});
+        } else if (_class = acidic["class"]) {
+            acidic["AA"].push({"name":aa, "num":result[aa]});
+        }
+    }
+        
+    var dataArray = [basic, nonpolar, polar, acidic];
+    
+    return dataArray
+}
 	
 console.log("I am running correctly.");
