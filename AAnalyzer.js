@@ -117,46 +117,49 @@ var prepData = function(result) {
 
 //Prepare data for visualization (method #2)
 var prepData2 = function(result) {
-    var basic = {"class":"Basic", "AA":[]};
-    var nonpolar = {"class":"Nonpolar (Hydrophobic)", "AA":[]};
-    var polar = {"class":"Polar, uncharged", "AA":[]};
-    var acidic = {"class":"Acidic", "AA":[]};
+    var basic = {"name":"Basic", "children":[]};
+    var nonpolar = {"name":"Nonpolar (Hydrophobic)", "children":[]};
+    var polar = {"name":"Polar, uncharged", "children":[]};
+    var acidic = {"name":"Acidic", "children":[]};
     
     for (let aa in result) {
         let _class = classifyAA(aa);
-        if (_class === basic["class"]) {
-            basic["AA"].push({"name":aa, "num":result[aa]});
-        } else if (_class === nonpolar["class"]) {
-            nonpolar["AA"].push({"name":aa, "num":result[aa]});
-        } else if (_class === polar["class"]) {
-            polar["AA"].push({"name":aa, "num":result[aa]});
-        } else if (_class === acidic["class"]) {
-            acidic["AA"].push({"name":aa, "num":result[aa]});
+        if (_class === basic["name"]) {
+            basic["children"].push({"name":aaDict[aa], "num":result[aa]});
+        } else if (_class === nonpolar["name"]) {
+            nonpolar["children"].push({"name":aaDict[aa], "num":result[aa]});
+        } else if (_class === polar["name"]) {
+            polar["children"].push({"name":aaDict[aa], "num":result[aa]});
+        } else if (_class === acidic["name"]) {
+            acidic["children"].push({"name":aaDict[aa], "num":result[aa]});
         }
     }
         
-    var dataArray = [basic, nonpolar, polar, acidic];
+    var data = {
+      "name": "All Amnio Acides",
+      "children": [basic, nonpolar, polar, acidic]
+    };
     
-    return dataArray;
+    return data;
 };
 
 //Prepare data for visualization (method #3)
 var prepData3 = function(result) {
 	var dataArray = {
-		"Basic": {"class":"Basic", "AA":[]},
-		"Nonpolar (Hydrophobic)": {"class":"Nonpolar (Hydrophobic)", "AA":[]},
-		"Polar, uncharged": {"class":"Polar, uncharged", "AA":[]},
-		"Acidic": {"class":"Acidic", "AA":[]}
+		"Basic": {"name":"Basic", "children":[]},
+		"Nonpolar (Hydrophobic)": {"name":"Nonpolar (Hydrophobic)", "children":[]},
+		"Polar, uncharged": {"name":"Polar, uncharged", "children":[]},
+		"Acidic": {"name":"Acidic", "children":[]}
 	};
 	
 	for (let aa in result) {
-		dataArray[aaTable[aa]]["AA"].push({"name":aa, "num":result[aa]});
+		dataArray[aaTable[aa]]["children"].push({"name":aaDict[aa], "num":result[aa]});
 	}
 	
-	var data = [];
+	var data = {"name": "root", "children":[]};
 	
 	for (let d in dataArray) {
-		data.push(dataArray[d]);
+		data["children"].push(dataArray[d]);
 	}
 	
 	return data;
