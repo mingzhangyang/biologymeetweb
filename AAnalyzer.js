@@ -45,7 +45,6 @@ var classifyAA = function(AA) {
 };
 
 //Classify amino acides (method #2):
-
 var aaTable = {
 	"H": "Basic",
 	"R": "Basic",
@@ -67,7 +66,7 @@ var aaTable = {
 	"T": "Polar, uncharged",
 	"D": "Acidic",
 	"E": "Acidic"
-}
+};
 
 //Compute amino acides composition
 var computeAA = function(seq) {
@@ -157,11 +156,11 @@ var prepData3 = function(result) {
 	var data = [];
 	
 	for (let d in dataArray) {
-		data.push(dataArray[d])
+		data.push(dataArray[d]);
 	}
 	
 	return data;
 	
-}
+};
 	
 console.log("I am running correctly.");

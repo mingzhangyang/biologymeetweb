@@ -20,10 +20,17 @@ YQILIYDFANFGVLRLSEPAPLFDLAMLALDSPESGWTEEDGPKEGLAEYIVEFLKKKAEMLADYFSLEI
 DEEGNLIGLPLLIDNYVPPLEGLPIFILRLATEVNWDEEKECFESLSKECAMFYSIRKQYISEESTLSGQ
 QSEVPGSIPNSWKWTVEHIVYKALRSHILPPKHFTEDGNILQLANLPDLYKVFERC`;
         var stat = computeAA(seq);
+        var count = 0;
+        for (let aa in stat) {
+          count += stat[aa];
+        }
+        console.log(count);
         var data1 = prepData(stat);
         var data2 = prepData2(stat);
+        var data3 = prepData3(stat);
         console.log(data1);
         console.log(data2);
+        console.log(data3);
       </script>
     </body>
 </html>
