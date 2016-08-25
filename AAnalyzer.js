@@ -30,7 +30,7 @@ var aaClass = {
     "Acidic": ["D", "E"]
 };
 
-//Classify amino acides:
+//Classify amino acides (method #1):
 var classifyAA = function(AA) {
     if (aaClass["Basic"].includes(AA)) {
         return "Basic";
@@ -39,8 +39,35 @@ var classifyAA = function(AA) {
     } else if (aaClass["Polar, uncharged"].includes(AA)) {
         return "Polar, uncharged";
     } else if (aaClass["Acidic"].includes(AA)) {
-        return "Acidic";}
+        return "Acidic";
+    	
+    }
 };
+
+//Classify amino acides (method #2):
+
+var aaTable = {
+	"H": "Basic",
+	"R": "Basic",
+	"K": "Basic",
+	"F": "Nonpolar (Hydrophobic)",
+	"A": "Nonpolar (Hydrophobic)",
+	"L": "Nonpolar (Hydrophobic)",
+	"M": "Nonpolar (Hydrophobic)",
+	"I": "Nonpolar (Hydrophobic)",
+	"W": "Nonpolar (Hydrophobic)",
+	"P": "Nonpolar (Hydrophobic)",
+	"V": "Nonpolar (Hydrophobic)",
+	"C": "Polar, uncharged",
+	"G": "Polar, uncharged",
+	"Q": "Polar, uncharged",
+	"N": "Polar, uncharged",
+	"S": "Polar, uncharged",
+	"Y": "Polar, uncharged",
+	"T": "Polar, uncharged",
+	"D": "Acidic",
+	"E": "Acidic"
+}
 
 //Compute amino acides composition
 var computeAA = function(seq) {
@@ -63,7 +90,7 @@ var computeAA = function(seq) {
     return result;
 };
 
-//Prepare data for visualization
+//Prepare data for visualization (method #1)
 var prepData = function(result) {
     var data = {
         "Basic": {"H":0, "R":0, "K":0},
@@ -89,6 +116,7 @@ var prepData = function(result) {
     return dataArray;
 };
 
+//Prepare data for visualization (method #2)
 var prepData2 = function(result) {
     var basic = {"class":"Basic", "AA":[]};
     var nonpolar = {"class":"Nonpolar (Hydrophobic)", "AA":[]};
@@ -112,5 +140,28 @@ var prepData2 = function(result) {
     
     return dataArray;
 };
+
+//Prepare data for visualization (method #3)
+var prepData3 = function(result) {
+	var dataArray = {
+		"Basic": {"class":"Basic", "AA":[]},
+		"Nonpolar (Hydrophobic)": {"class":"Nonpolar (Hydrophobic)", "AA":[]},
+		"Polar, uncharged": {"class":"Polar, uncharged", "AA":[]},
+		"Acidic": {"class":"Acidic", "AA":[]}
+	};
+	
+	for (let aa in result) {
+		dataArray[aaTable[aa]]["AA"].push({"name":aa, "num":result[aa]});
+	}
+	
+	var data = [];
+	
+	for (let d in dataArray) {
+		data.push(dataArray[d])
+	}
+	
+	return data;
+	
+}
 	
 console.log("I am running correctly.");
