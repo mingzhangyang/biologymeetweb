@@ -93,24 +93,24 @@ var prepData2 = function(result) {
     var basic = {"class":"Basic", "AA":[]};
     var nonpolar = {"class":"Nonpolar (Hydrophobic)", "AA":[]};
     var polar = {"class":"Polar, uncharged", "AA":[]};
-    var acidic = {"class":"Acidic", "AA":[]}
+    var acidic = {"class":"Acidic", "AA":[]};
     
     for (let aa in result) {
         let _class = classifyAA(aa);
-        if (_class = basic["class"]) {
+        if (_class === basic["class"]) {
             basic["AA"].push({"name":aa, "num":result[aa]});
-        } else if (_class = nonpolar["class"]) {
+        } else if (_class === nonpolar["class"]) {
             nonpolar["AA"].push({"name":aa, "num":result[aa]});
-        } else if (_class = polar["class"]) {
+        } else if (_class === polar["class"]) {
             polar["AA"].push({"name":aa, "num":result[aa]});
-        } else if (_class = acidic["class"]) {
+        } else if (_class === acidic["class"]) {
             acidic["AA"].push({"name":aa, "num":result[aa]});
         }
     }
         
     var dataArray = [basic, nonpolar, polar, acidic];
     
-    return dataArray
-}
+    return dataArray;
+};
 	
 console.log("I am running correctly.");
