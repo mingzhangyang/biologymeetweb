@@ -73,14 +73,14 @@ QSEVPGSIPNSWKWTVEHIVYKALRSHILPPKHFTEDGNILQLANLPDLYKVFERC`;
         var categoryColor = {
             "Basic": "blue",
             "Acidic": "red",
-            "Nonpolar (Hydrophobic)": "green",
-            "Polar, uncharged": "magenta",
-            "All Amnio Acides": "orange"
+            "Nonpolar (Hydrophobic)": "lightgreen",
+            "Polar, uncharged": "orange",
+            "All Amnio Acides": "rgba(255, 255, 0, 0.1)"
         };
 
         var aaColor = d3.scale.linear()
-            .domain([2.85, 7.0, 10.76])
-            .range(["red", "green", "blue"]);
+            .domain([2.85, 10.76])
+            .range(["salmon", "deepskyblue"]);
 
         var partition = d3.layout.partition()
             .value(function(d) { return d.count; });
