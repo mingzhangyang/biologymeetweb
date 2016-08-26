@@ -22,6 +22,28 @@ var aaDict = {
     "V": "Val",
 };
 
+var aapI = {
+    "Ala": 6.01,
+    "Cys": 5.05,
+    "Asp": 2.85,
+    "Glu": 3.15,
+    "Phe": 5.49,
+    "Gly": 6.06,
+    "His": 7.60,
+    "Ile": 6.05,
+    "Lys": 9.60,
+    "Leu": 6.01,
+    "Met": 5.74,
+    "Asn": 5.41,
+    "Pro": 6.30,
+    "Gln": 5.65,
+    "Arg": 10.76,
+    "Ser": 5.68,
+    "Thr": 5.60,
+    "Val": 6.00,
+    "Trp": 5.89,
+    "Tyr": 5.64
+};
 
 var aaClass = {
     "Basic": ["H", "R", "K"],
