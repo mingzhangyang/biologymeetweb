@@ -30,7 +30,7 @@
             text-indent: 2px;
         }
     </style>
-    <script src="AAnalyzer.js"></script>
+    <script src="bioKit.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     </head>
     
@@ -49,7 +49,7 @@ YQILIYDFANFGVLRLSEPAPLFDLAMLALDSPESGWTEEDGPKEGLAEYIVEFLKKKAEMLADYFSLEI
 DEEGNLIGLPLLIDNYVPPLEGLPIFILRLATEVNWDEEKECFESLSKECAMFYSIRKQYISEESTLSGQ
 QSEVPGSIPNSWKWTVEHIVYKALRSHILPPKHFTEDGNILQLANLPDLYKVFERC`;
 
-        var stat = computeAA(seq);
+        var stat = countAA(seq);
         var count = 0;
         for (let aa in stat) {
           count += stat[aa];
@@ -79,7 +79,7 @@ QSEVPGSIPNSWKWTVEHIVYKALRSHILPPKHFTEDGNILQLANLPDLYKVFERC`;
         var treemap = d3.layout.treemap()
                           .size([width, height])
                           .sticky(true)
-                          .value(function(d) { return d.num; });
+                          .value(function(d) { return d.count; });
 
         var div = d3.select("body").append("div")
                       .style("position", "relative")
@@ -101,7 +101,7 @@ QSEVPGSIPNSWKWTVEHIVYKALRSHILPPKHFTEDGNILQLANLPDLYKVFERC`;
         d3.selectAll("input").on("change", function change() {
             var value = this.value === "count"
                 ? function() { return 1; }
-                : function(d) { return d.num; };
+                : function(d) { return d.count; };
 
             node
                 .data(treemap.value(value).nodes)
