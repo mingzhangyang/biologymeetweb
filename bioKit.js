@@ -90,8 +90,8 @@ var aaTable = {
 	"E": "Acidic"
 };
 
-//Compute amino acides composition
-var computeAA = function(seq) {
+//Count amino acides composition
+var countAA = function(seq) {
     var SEQ = seq.toUpperCase();
 
     let re = /[\s\d]+/;
@@ -111,8 +111,9 @@ var computeAA = function(seq) {
     return result;
 };
 
-//Prepare data for visualization (method #1)
-var prepData = function(result) {
+//Prepare hierarchy data for visualization (method #1)
+//I am not sure whether this data structure works or not. Anyway, method #2 and #3 do.
+var prepData = function(aaCounts) {
     var data = {
         "Basic": {"H":0, "R":0, "K":0},
         "Nonpolar (Hydrophobic)": {"F":0, "A":0, "L":0, "M":0, "I":0, "W":0, "P":0, "V":0},
@@ -120,9 +121,9 @@ var prepData = function(result) {
         "Acidic": {"D":0, "E":0}
     };
 
-    for (let aa in result) {
+    for (let aa in aaCounts) {
         var _class = classifyAA(aa);
-        data[_class][aa] = result[aa];
+        data[_class][aa] = aaCounts[aa];
     }
 
     var dataArray = [];
@@ -137,23 +138,23 @@ var prepData = function(result) {
     return dataArray;
 };
 
-//Prepare data for visualization (method #2)
-var prepData2 = function(result) {
+//Prepare hierarchy data for visualization (method #2)
+var prepData2 = function(aaCounts) {
     var basic = {"name":"Basic", "children":[]};
     var nonpolar = {"name":"Nonpolar (Hydrophobic)", "children":[]};
     var polar = {"name":"Polar, uncharged", "children":[]};
     var acidic = {"name":"Acidic", "children":[]};
     
-    for (let aa in result) {
+    for (let aa in aaCounts) {
         let _class = classifyAA(aa);
         if (_class === basic["name"]) {
-            basic["children"].push({"name":aaDict[aa], "num":result[aa]});
+            basic["children"].push({"name":aaDict[aa], "count":aaCounts[aa]});
         } else if (_class === nonpolar["name"]) {
-            nonpolar["children"].push({"name":aaDict[aa], "num":result[aa]});
+            nonpolar["children"].push({"name":aaDict[aa], "count":aaCounts[aa]});
         } else if (_class === polar["name"]) {
-            polar["children"].push({"name":aaDict[aa], "num":result[aa]});
+            polar["children"].push({"name":aaDict[aa], "count":aaCounts[aa]});
         } else if (_class === acidic["name"]) {
-            acidic["children"].push({"name":aaDict[aa], "num":result[aa]});
+            acidic["children"].push({"name":aaDict[aa], "count":aaCounts[aa]});
         }
     }
         
@@ -165,8 +166,8 @@ var prepData2 = function(result) {
     return data;
 };
 
-//Prepare data for visualization (method #3)
-var prepData3 = function(result) {
+//Prepare hierarchy data for visualization (method #3)
+var prepData3 = function(aaCounts) {
 	var dataArray = {
 		"Basic": {"name":"Basic", "children":[]},
 		"Nonpolar (Hydrophobic)": {"name":"Nonpolar (Hydrophobic)", "children":[]},
@@ -174,8 +175,8 @@ var prepData3 = function(result) {
 		"Acidic": {"name":"Acidic", "children":[]}
 	};
 	
-	for (let aa in result) {
-		dataArray[aaTable[aa]]["children"].push({"name":aaDict[aa], "num":result[aa]});
+	for (let aa in aaCounts) {
+		dataArray[aaTable[aa]]["children"].push({"name":aaDict[aa], "count":aaCounts[aa]});
 	}
 	
 	var data = {"name": "root", "children":[]};
