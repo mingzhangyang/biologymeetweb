@@ -25,7 +25,7 @@
         }
     </style>
 
-        <script src="AAnalyzer.js"></script>
+        <script src="bioKit.js"></script>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     </head>
     
@@ -43,7 +43,7 @@ TAACTPRRRIINLTSVLSLQEEINEQGHEVLREMLHNHSFVGCVNPQWALAQHQTKLYLLNTTKLSEELF
 YQILIYDFANFGVLRLSEPAPLFDLAMLALDSPESGWTEEDGPKEGLAEYIVEFLKKKAEMLADYFSLEI
 DEEGNLIGLPLLIDNYVPPLEGLPIFILRLATEVNWDEEKECFESLSKECAMFYSIRKQYISEESTLSGQ
 QSEVPGSIPNSWKWTVEHIVYKALRSHILPPKHFTEDGNILQLANLPDLYKVFERC`;
-        var stat = computeAA(seq);
+        var stat = countAA(seq);
         var count = 0;
         for (let aa in stat) {
           count += stat[aa];
@@ -83,7 +83,7 @@ QSEVPGSIPNSWKWTVEHIVYKALRSHILPPKHFTEDGNILQLANLPDLYKVFERC`;
             .range(["red", "green", "blue"]);
 
         var partition = d3.layout.partition()
-            .value(function(d) { return d.num; });
+            .value(function(d) { return d.count; });
 
         var arc = d3.svg.arc()
             .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
@@ -112,7 +112,7 @@ QSEVPGSIPNSWKWTVEHIVYKALRSHILPPKHFTEDGNILQLANLPDLYKVFERC`;
             .append("title")
               .text(function(d) { 
                   if (d.num ) {
-                      return d.name + "\n" + "Count: " + formatNumber(d.num); 
+                      return d.name + "\n" + "Count: " + formatNumber(d.count); 
                   } else { return d.name; 
                   }
               });
