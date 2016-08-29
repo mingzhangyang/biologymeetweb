@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>BiologyMeetWeb</title>
+        <style>
+        body {
+          margin: auto;
+          position: relative;
+        }
+
+        .node {
+          border: solid 2px white;
+          font: 20pt sans-serif;
+          line-height: 12px;
+          overflow: hidden;
+          position: absolute;
+          text-indent: 2px;
+          font-weight: bold;
+          color:#fff;
+        }
+        
+        .title {
+          font: 20pt san-serif;
+        }
+    </style>
+
+        <script src="bioKit.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    </head>
+    
+    <body>
+      <div id='treemap'></div>
+      <script>
+        var seq = `MSFVAGVIRRLDETVVNRIAAGEVIQRPANAIKEMIENCLDAKSTSIQVIVKEGGLKLIQIQDNGTGIRK
+EDLDIVCERFTTSKLQSFEDLASISTYGFRGEALASISHVAHVTITTKTADGKCAYRASYSDGKLKAPPK
+PCAGNQGTQITVEDLFYNIATRRKALKNPSEEYGKILEVVGRYSVHNAGISFSVKKQGETVADVRTLPNA
+STVDNIRSIFGNAVSRELIEIGCEDKTLAFKMNGYISNANYSVKKCIFLLFINHRLVESTSLRKAIETVY
+AAYLPKNTHPFLYLSLEISPQNVDVNVHPTKHEVHFLHEESILERVQQHIESKLLGSNSSRMYFTQTLLP
+GLAGPSGEMVKSTTSLTSSSTSGSSDKVYAHQMVRTDSREQKLDAFLQPLSKPLSSQPQAIVTEDKTDIS
+SGRARQQDEEMLELPAPAEVAAKNQSLEGDTTKGTSEMSEKRGPTSSNPRKRHREDSDVEMVEDDSRKEM
+TAACTPRRRIINLTSVLSLQEEINEQGHEVLREMLHNHSFVGCVNPQWALAQHQTKLYLLNTTKLSEELF
+YQILIYDFANFGVLRLSEPAPLFDLAMLALDSPESGWTEEDGPKEGLAEYIVEFLKKKAEMLADYFSLEI
+DEEGNLIGLPLLIDNYVPPLEGLPIFILRLATEVNWDEEKECFESLSKECAMFYSIRKQYISEESTLSGQ
+QSEVPGSIPNSWKWTVEHIVYKALRSHILPPKHFTEDGNILQLANLPDLYKVFERC`;
+        var stat = countAA(seq);
+        var count = 0;
+        for (let aa in stat) {
+          count += stat[aa];
+        }
+        console.log(count);
+        var data1 = prepData(stat);
+        var data2 = prepData2(stat);
+        var data3 = prepData3(stat);
+        console.log(data1);
+        console.log(data2);
+        console.log(data3);
+        
+        
+        var width = 960,
+            height = 700,
+            radius = (Math.min(width, height) / 2) - 10;
+
+        var formatNumber = d3.format(",d");
+
+        var x = d3.scale.linear()
+            .range([0, 2 * Math.PI]);
+
+        var y = d3.scale.sqrt()
+            .range([0, radius]);
+
+//var color = d3.scale.category20c();
+        var categoryColor = {
+            "Basic": "blue",
+            "Acidic": "red",
+            "Nonpolar (Hydrophobic)": "lightgreen",
+            "Polar, uncharged": "orange",
+            "All Amnio Acides": "rgba(255, 255, 0, 0.1)"
+        };
+
+        var aaColor = d3.scale.linear()
+            .domain([2.85, 10.76])
+            .range(["salmon", "deepskyblue"]);
+
+        var partition = d3.layout.partition()
+            .value(function(d) { return d.count; });
+
+        var arc = d3.svg.arc()
+            .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+            .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+            .innerRadius(function(d) { return Math.max(0, y(d.y)); })
+            .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+          .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+
+        svg.selectAll("path")
+              .data(partition.nodes(data2))
+            .enter().append("path")
+              .attr("d", arc)
+              .style("fill", function(d) { 
+                    if (d.children) {
+                        return categoryColor[d.name];
+                    } else { return aaColor(aapI[d.name]);
+                    }
+              })
+                //return color[(d.children ? d : d.parent).name]; })
+              .on("click", click)
+            .append("title")
+              .text(function(d) { 
+                  if (d.num ) {
+                      return d.name + "\n" + "Count: " + formatNumber(d.count); 
+                  } else { return d.name; 
+                  }
+              });
+      
+        function click(d) {
+            svg.transition()
+              .duration(750)
+              .tween("scale", function() {
+                  var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+                      yd = d3.interpolate(y.domain(), [d.y, 1]),
+                      yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+                  return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
+               })
+              .selectAll("path")
+              .attrTween("d", function(d) { return function() { return arc(d); }; });
+        }
+
+        d3.select(self.frameElement).style("height", height + "px");
+
+      </script>
+      
+
+</html>
