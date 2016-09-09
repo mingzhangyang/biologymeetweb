@@ -138,9 +138,9 @@
           var A4 = data[3].count / (seq.length + 1) * Math.PI * 2;
           var Angles = [
               {name: data[0].name, start: 0, end: A1},
-              {name: data[1].name, start: A1, end: A1+A2},
-              {name: data[2].name, start: A1+A2, end: A1+A2+A3},
-              {name: data[3].name, start: A1+A2+A3, end:A1+A2+A3+A4}
+              {name: data[1].name, start: A1, end: A1 + A2},
+              {name: data[2].name, start: A1+A2, end: A1 + A2 + A3},
+              {name: data[3].name, start: A1+A2+A3, end: Math.PI * 2}
           ]
           var arc = d3.arc()
               .outerRadius(250 - 10)
