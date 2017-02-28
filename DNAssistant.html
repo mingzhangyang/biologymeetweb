@@ -30,26 +30,31 @@
         left: 18%;
         width: 64%;
       }
+
+      #axisBottom text {
+          font: 12px sans-serif;
+      }
+
+      #axisBottom path,
+      #axisBottom line {
+          fill: none;
+          stroke: #000;
+          stroke-width: 2px;
+          shape-rendering: crispEdges;
+      }
       
       .output {
         position: relative;
         left: 18%;
         width: 64%;
       }
-      
-   
+
     </style>
     
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="javascripts/bioKit.js"></script>
-  </head>
-  
-  
-  
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="javascripts/bioKit.js"></script> </head>
   <body>
-
     <div id="header" class="outer">
-          
           <h1 align="middle"><font id="application_title" color="white">DNAssistant</font></h1>
           <h2 id="project_tagline"></h2>
     </div>
@@ -65,20 +70,16 @@
     <div class="output">
       <h4 id="OT1"></h4>
       <p id="output1"></p>
-     
       <a id="GC-content"></a>
       <br>
       <br>
       <svg id="barChart" width="680" height="170"></svg>
       <br>
       <svg id="pieChart" width="500" height="500"></svg>
-      
     </div>
-    
     <div class="output">
       <h4 id="OT2"></h4>
       <p id="output2"></p>
-      
     </div>
     <script src="javascripts/GC_content.js"></script>
   </body>
