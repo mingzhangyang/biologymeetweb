@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>AAnalyzer</title>
+    
+    <style>
+      body {
+        box-sizing: border-box;
+        color:#373737;
+        background: #f2f2f2;
+        font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+      #header {
+        background: #f4c20d;
+        font-size: 16px;
+        width: 100%;
+        height: 70px;
+        line-height: 70px;
+      }
+      
+      h4 {
+        font-size: 20px;
+      }
+      
+      #textbox {
+        position: relative;
+        left: 18%;
+        width: 64%;
+      }
+      
+      input {
+        display: inline-block;
+        height: auto;
+      }
+      
+      .node {
+        border: solid 1px yellow;
+        font: 16px sans-serif;
+        font-weight: bold;
+        line-height: 12px;
+        overflow: hidden;
+        position: absolute;
+        text-align: center;
+        line-height: 200%;
+        text-indent: 2px;
+        }
+      
+      .output {
+        position: relative;
+        left: 18%;
+        width: 64%;
+      }
+      
+   
+    </style>
+    
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="../javascripts/bioKit.js"></script>
+  </head>
+  
+  
+  
+  <body>
+
+    <div id="header" class="outer">
+          
+          <h1 align="middle"><font id="application_title" color="white">AAnalyzer</font></h1>
+          <h2 id="project_tagline"></h2>
+    </div>
+    <br>
+    <div id="textbox">
+      <a><font size="4">Please input your protein sequence below.</font></a>
+      <br>
+      <textarea id="input" cols="100" rows="16"></textarea>
+      <br>
+      <span>
+      <button type="button" onclick="drawSunburst('input', '#output1')">Sunburst</button>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button type="button" onclick="drawTreemap('input', '#output1')">Treemap</button>
+      </span>
+    </div>
+    
+    <div class="output">
+      <h4 id="OT1"></h4>
+      <p id="output1"></p>
+      <br>
+      <br>
+      <svg id="sunBurst" width="750" height="750"></svg>
+      <br>
+      <div id="treemap"></div>
+      
+    </div>
+    
+    <div class="output">
+      <h4 id="OT2"></h4>
+      <p id="output2"></p>
+      
+    </div>
+    
+    <script>
+      var aaStats;
+      var inputSeq;
+      
+      var drawSunburst = function(input, output) {
+        var seq = bioKit.prepSeq(document.getElementById(input).value);
+        var aas = bioKit.countAA(seq);
+        var length = "The length of your input sequence is " + (seq.length) +
+          " AA, ";
+        var stats = JSON.stringify(aas);
+
+        d3.select("#OT1").text("Amino acides composition").attr("size", "4");
+        d3.select(output).text(length + stats);
+
+        aaStats = aas;
+        inputSeq = seq;
+
+        function sunburstChart() {
+            var data = bioKit.prepData2(aas);
+            var width = 800,
+                height = 600,
+                radius = (Math.min(width, height) / 2) - 10;
+            var formatNumber = d3.format(",d");
+            var x = d3.scale.linear()
+                .range([0, 2 * Math.PI]);
+            var y = d3.scale.sqrt()
+                .range([0, radius]);
+            //var color = d3.scale.category20c();
+            var categoryColor = {
+                "Basic": "blue",
+                "Acidic": "red",
+                "Nonpolar (Hydrophobic)": "lightgreen",
+                "Polar, uncharged": "orange",
+                "All Amnio Acides": "rgba(255, 255, 0, 0.1)"
+            };
+            var aaColor = d3.scale.linear()
+                .domain([2.85, 10.76])
+                .range(["salmon", "deepskyblue"]);
+            var partition = d3.layout.partition()
+                .value(function (d) {
+                  return d.count;
+                });
+            var arc = d3.svg.arc()
+                .startAngle(function (d) {
+                  return Math.max(0, Math.min(2 * Math.PI, x(d.x)));
+                })
+                .endAngle(function (d) {
+                  return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx)));
+                })
+                .innerRadius(function (d) {
+                  return Math.max(0, y(d.y));
+                })
+                .outerRadius(function (d) {
+                  return Math.max(0, y(d.y + d.dy));
+                });
+            var svg = d3.select("#sunBurst")
+                .attr("width", width)
+                .attr("height", height)
+              .append("g")
+                .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+            svg.selectAll("path")
+                  .data(partition.nodes(data))
+                .enter().append("path")
+                  .attr("d", arc)
+                  .style("fill", function(d) {
+                        if (d.children) {
+                          return categoryColor[d.name];
+                        } else {
+                          return aaColor(aapI[d.name]);
+                        }
+                  })
+                  .on("click", click)
+                .append("title")
+                  .text(function(d) {
+                      if (d.count ) {
+                        return d.name + "\n" + "Count: " + formatNumber(d.count);
+                      } else {
+                        return d.name;
+                      }
+                  });
+
+            function click(d) {
+                svg.transition()
+                  .duration(750)
+                  .tween("scale", function() {
+                      var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+                          yd = d3.interpolate(y.domain(), [d.y, 1]),
+                          yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+                      return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
+                   })
+                  .selectAll("path")
+                  .attrTween("d", function(d) { return function() { return arc(d); }; });
+            }
+            d3.select(self.frameElement).style("height", height + "px");
+        }
+
+        sunburstChart();
+      };
+      
+      var drawTreemap = function(input, output) {
+        let seq = document.getElementById(input).value;
+        seq = bioKit.prepSeq(seq);
+        let aas = bioKit.countAA(seq);
+        let length = "The length of your input sequence is " + (seq.length) + " AA, ";
+        let stats = JSON.stringify(aas);
+        let result = length + stats;
+        d3.select("#OT1").text("Amino acides composition").attr("size", "4");
+        d3.select(output).text(result);
+        
+        var treemapChart = function() {
+          let data = bioKit.prepData2(aas);
+          var margin = {top: 40, right: 10, bottom: 10, left: 10},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+        var color = {
+            "Basic": "blue",
+            "Acidic": "red",
+            "Nonpolar (Hydrophobic)": "green",
+            "Polar, uncharged": "magenta"
+        };
+
+        var treemap = d3.layout.treemap()
+                          .size([width, height])
+                          .sticky(true)
+                          .value(function(d) { return d.count; });
+
+        var div = d3.select("#treemap")
+                      .style("position", "relative")
+                      .style("width", (width + margin.left + margin.right) + "px")
+                      .style("height", (height + margin.top + margin.bottom) + "px")
+                      .style("left", margin.left + "px")
+                      .style("top", margin.top + "px");
+
+
+
+        var node = div.datum(data).selectAll(".node")
+                       .data(treemap.nodes)
+                     .enter().append("div")
+                       .attr("class", "node")
+                      .call(position)
+                      .style("background", function(d) { return d.children ? color[d.name] : null; })
+                      .text(function(d) { return d.children ? null : d.name; });
+
+        d3.selectAll("input").on("change", function change() {
+            var value = this.value === "count"
+                ? function() { return 1; }
+                : function(d) { return d.count; };
+
+            node
+                .data(treemap.value(value).nodes)
+                .transition()
+                .duration(1500)
+                .call(position);
+        });
+
+
+        function position() {
+            this.style("left", function(d) { return d.x + "px"; })
+            .style("top", function(d) { return d.y + "px"; })
+            .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
+            .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
+        }
+        
+      };
+        
+        treemapChart();
+        
+      };
+        
+        
+        
+      
+
+      
+      
+      
+      
+    </script>
+  </body>
+</html>
