@@ -9,7 +9,7 @@ var computeComposition = (function () {
     var seq = bioKit.prepSeq(inputSeq);
     var bases = bioKit.countBase(seq);
     var length = "The length of your input sequence is " + (seq.length) + " bp, ";
-    var stats = "including A: " + bases["A"] + ", T: " + bases["T"] + ", G: " + bases["G"] + " C: " + bases["C"];
+    var stats = "including A: " + bases["A"] + ", T: " + bases["T"] + ", G: " + bases["G"] + ", C: " + bases["C"];
     d3.select("#OT1").text("Stats of the sequence").attr("size", "4");
     d3.select(output).text(length + stats);
     GC = ((bases["G"] + bases["C"]) / (seq.length) * 100).toFixed(2) + '%';
