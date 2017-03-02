@@ -125,7 +125,7 @@ var bioKit = (function () {
 //Prep seqence to remove illeagle chars
   var prepSeq = function(seq) {
     var SEQ = seq.toUpperCase();
-    let re = /[\s\d]+/;
+    var re = /[\s\d]+/;
     SEQ = SEQ.split(re).join("");
     return SEQ;
   };
@@ -134,8 +134,8 @@ var bioKit = (function () {
 //Count ATGC
   var countBase = function(seq) {
     seq = prepSeq(seq);
-    let bases = {A: 0, T:0, G:0, C:0, U:0};
-    for (let i = 0; i < seq.length; i++) {
+    var bases = {A: 0, T:0, G:0, C:0, U:0};
+    for (var i = 0; i < seq.length; i++) {
       bases[seq[i]] += 1;
     }
     return bases;
@@ -145,10 +145,10 @@ var bioKit = (function () {
 //Count amino acides composition
   var countAA = function(seq) {
     var SEQ = seq.toUpperCase();
-    let re = /[\s\d]+/;
+    var re = /[\s\d]+/;
     SEQ = SEQ.split(re).join("");
-    let result = {};
-    for (let i = 0; i < SEQ.length; i++) {
+    var result = {};
+    for (var i = 0; i < SEQ.length; i++) {
       if (SEQ[i] in result) {
         result[SEQ[i]] += 1;
       } else {
@@ -168,15 +168,15 @@ var bioKit = (function () {
       "Acidic": {"D":0, "E":0}
     };
 
-    for (let aa in aaCounts) {
+    for (var aa in aaCounts) {
       var _class = classifyAA(aa);
       data[_class][aa] = aaCounts[aa];
     }
 
     var dataArray = [];
 
-    for (let d in data) {
-      let x = {};
+    for (var d in data) {
+      var x = {};
       x["class"] = d;
       x["AA"] = data[d];
       dataArray.push(x);
@@ -192,8 +192,8 @@ var bioKit = (function () {
     var polar = {"name":"Polar, uncharged", "children":[]};
     var acidic = {"name":"Acidic", "children":[]};
 
-    for (let aa in aaCounts) {
-      let _class = classifyAA(aa);
+    for (var aa in aaCounts) {
+      var _class = classifyAA(aa);
       if (_class === basic["name"]) {
         basic["children"].push({"name":aaDict[aa], "count":aaCounts[aa]});
       } else if (_class === nonpolar["name"]) {
@@ -219,13 +219,13 @@ var bioKit = (function () {
       "Acidic": {"name":"Acidic", "children":[]}
     };
 
-    for (let aa in aaCounts) {
+    for (var aa in aaCounts) {
       dataArray[aaTable[aa]]["children"].push({"name":aaDict[aa], "count":aaCounts[aa]});
     }
 
     var data = {"name": "root", "children":[]};
 
-    for (let d in dataArray) {
+    for (var d in dataArray) {
       data["children"].push(dataArray[d]);
     }
 

@@ -44,16 +44,42 @@
           shape-rendering: crispEdges;
       }
       
-      .output {
+      #gcOutput {
         position: relative;
         left: 18%;
         width: 64%;
       }
 
+        #transformOutput, #primersOutput {
+            max-width: 700px;
+            position: relative;
+            left: 18%;
+            width: 64%;
+        }
+
+        .seqArea {
+            width: 700px;
+            word-wrap: break-word;
+        }
+
+      table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+      }
+      th{
+          padding: 5px;
+          text-align: left;
+          background-color: #f1f1f1;
+      }
+      td {
+          padding: 5px;
+          text-align: left;
+      }
+
     </style>
     
     <script src="https://d3js.org/d3.v3.min.js"></script>
-    <script src="javascripts/bioKit.js"></script> </head>
+    <script src="src/bioKit.js"></script> </head>
   <body>
     <div id="header" class="outer">
           <h1 align="middle"><font id="application_title" color="white">DNAssistant</font></h1>
@@ -67,8 +93,14 @@
       <br>
       <input type="submit" value="Composition"
              onclick="computeComposition('input', '#output1')"/>
+      &nbsp&nbsp&nbsp
+      <input type="submit" value="Transform"
+             onclick="transformDNA('input', '#transformOutput')"/>
+        &nbsp&nbsp&nbsp
+        <input type="submit" value="getPrimers"
+               onclick="getPrimers('input', 'primersOutput')"/>
     </div>
-    <div class="output">
+    <div id="gcOutput">
       <h4 id="OT1"></h4>
       <p id="output1"></p>
       <a id="GC-content"></a>
@@ -78,10 +110,10 @@
       <br>
       <svg id="pieChart" width="500" height="500"></svg>
     </div>
-    <div class="output">
-      <h4 id="OT2"></h4>
-      <p id="output2"></p>
-    </div>
-    <script src="javascripts/GC_content.js"></script>
+    <div id="transformOutput"></div>
+    <div id="primersOutput"></div>
+    <script src="src/GC_content.js"></script>
+    <script src="src/transformDNA.js"></script>
+    <script src="src/getPrimers.js"></script>
   </body>
 </html>

@@ -2,6 +2,10 @@
 
 var computeComposition = (function () {
   return function(input, output) {
+    d3.select('#gcOutput').style('display', 'block');
+    d3.select('#transformOutput').style('display', 'none');
+    d3.select('#primersOutput').style('display', 'none');
+
     var GC;
     var inputSeq = document.getElementById(input).value;
     console.log(inputSeq);
