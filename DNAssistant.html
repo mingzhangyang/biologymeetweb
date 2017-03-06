@@ -1,119 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="images/myLogo.png"/>
     <title>DNAssistant - BiologyMeetWeb</title>
-    
-    <style>
-      body {
-        box-sizing: border-box;
-        color:#373737;
-        background: #f2f2f2;
-        font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
-        line-height: 1.5;
-        -webkit-font-smoothing: antialiased;
-      }
-      #header {
-        background: #0090ff;
-        font-size: 16px;
-        width: 100%;
-        height: 70px;
-        line-height: 70px;
-      }
-      
-      h4 {
-        font-size: 20px;
-      }
-      
-      #textbox {
-        position: relative;
-        left: 18%;
-        width: 64%;
-      }
-
-      #axisBottom text {
-          font: 12px sans-serif;
-      }
-
-      #axisBottom path,
-      #axisBottom line {
-          fill: none;
-          stroke: #000;
-          stroke-width: 2px;
-          shape-rendering: crispEdges;
-      }
-      
-      #gcOutput {
-        position: relative;
-        left: 18%;
-        width: 64%;
-      }
-
-        #transformOutput, #primersOutput {
-            max-width: 700px;
-            position: relative;
-            left: 18%;
-            width: 64%;
-        }
-
-        .seqArea {
-            width: 700px;
-            word-wrap: break-word;
-        }
-
-      table, th, td {
-          border: 1px solid black;
-          border-collapse: collapse;
-      }
-      th{
-          padding: 5px;
-          text-align: left;
-          background-color: #f1f1f1;
-      }
-      td {
-          padding: 5px;
-          text-align: left;
-      }
-
-    </style>
-    
+    <link rel="stylesheet" type="text/css" href="stylesheets/DNAssistant.css">
     <script src="https://d3js.org/d3.v3.min.js"></script>
-    <script src="src/bioKit.js"></script> </head>
-  <body>
+    <script src="src/bioKit.js"></script>
+</head>
+<body>
     <div id="header" class="outer">
-          <h1 align="middle"><font id="application_title" color="white">DNAssistant</font></h1>
-          <h2 id="project_tagline"></h2>
+        <h1 align="middle"><font id="application_title" color="white">DNAssistant</font></h1>
+        <h2 id="project_tagline"></h2>
     </div>
     <br>
     <div id="textbox">
-      <a><font size="4">Please input your DNA sequence below.</font></a>
-      <br>
-      <textarea id="input" cols="100" rows="16"></textarea>
-      <br>
-      <input type="submit" value="Composition"
-             onclick="computeComposition('input', '#output1')"/>
-      &nbsp&nbsp&nbsp
-      <input type="submit" value="Transform"
-             onclick="transformDNA('input', '#transformOutput')"/>
+        <a><font size="4">Please input your DNA sequence below.</font></a>
+        <br>
+        <textarea id="input" cols="100" rows="16"></textarea>
+        <br>
+        <input type="submit" value="Composition"
+               onclick="computeComposition('input', '#output1')"/>
+        &nbsp&nbsp&nbsp
+        <input type="submit" value="Transform"
+               onclick="transformDNA('input', '#transformOutput')"/>
         &nbsp&nbsp&nbsp
         <input type="submit" value="getPrimers"
                onclick="getPrimers('input', 'primersOutput')"/>
+        &nbsp&nbsp&nbsp
+        <input type="submit" value="Translate" onclick="translateDNA('input',
+            'translateOutput')"/>
     </div>
     <div id="gcOutput">
-      <h4 id="OT1"></h4>
-      <p id="output1"></p>
-      <a id="GC-content"></a>
-      <br>
-      <br>
-      <svg id="barChart" width="680" height="170"></svg>
-      <br>
-      <svg id="pieChart" width="500" height="500"></svg>
+        <h4 id="OT1"></h4>
+        <p id="output1"></p>
+        <a id="GC-content"></a>
+        <br>
+        <br>
+        <svg id="barChart" width="680" height="170"></svg>
+        <br>
+        <svg id="pieChart" width="500" height="500"></svg>
     </div>
     <div id="transformOutput"></div>
     <div id="primersOutput"></div>
-    <script src="src/GC_content.js"></script>
-    <script src="src/transformDNA.js"></script>
-    <script src="src/getPrimers.js"></script>
-  </body>
+    <div id="translateOutput"></div>
+    <script src="src/DNAssistant/GC_content.js"></script>
+    <script src="src/DNAssistant/transformDNA.js"></script>
+    <script src="src/DNAssistant/getPrimers.js"></script>
+    <script src="src/DNAssistant/translate.js"></script>
+</body>
 </html>

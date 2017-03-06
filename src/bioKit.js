@@ -233,6 +233,76 @@ var bioKit = (function () {
 
   };
 
+// genetic code
+  var codon = {
+    'TTC': 'F',
+    'GTG': 'V',
+    'GGT': 'G',
+    'AGA': 'R',
+    'CCG': 'P',
+    'CCA': 'P',
+    'TCC': 'S',
+    'GAG': 'E',
+    'AGG': 'R',
+    'GAC': 'D',
+    'TCG': 'S',
+    'AAA': 'K',
+    'CTA': 'L',
+    'GTT': 'V',
+    'GCC': 'A',
+    'GCT': 'A',
+    'TTT': 'F',
+    'GAT': 'D',
+    'TAT': 'Y',
+    'GGG': 'G',
+    'CTG': 'L',
+    'GAA': 'E',
+    'CAA': 'Q',
+    'CCT': 'P',
+    'GGC': 'G',
+    'TCT': 'S',
+    'ATG': 'M',
+    'CGA': 'R',
+    'ATA': 'I',
+    'TTG': 'L',
+    'CAT': 'H',
+    'CAG': 'Q',
+    'TGG': 'W',
+    'GTA': 'V',
+    'AAG': 'K',
+    'TGT': 'C',
+    'CCC': 'P',
+    'AAT': 'N',
+    'ACC': 'T',
+    'CGG': 'R',
+    'TAC': 'Y',
+    'ACG': 'T',
+    'ACA': 'T',
+    'CAC': 'H',
+    'ATT': 'I',
+    'CGC': 'R',
+    'AAC': 'N',
+    'CGT': 'R',
+    'TTA': 'L',
+    'GCA': 'A',
+    'AGC': 'S',
+    'ACT': 'T',
+    'TGC': 'C',
+    'TCA': 'S',
+    'AGT': 'S',
+    'GCG': 'A',
+    'GGA': 'G',
+    'GTC': 'V',
+    'ATC': 'I',
+    'CTC': 'L',
+    'CTT': 'L',
+    'TAA': 'STOP',
+    'TGA': 'STOP',
+    'TAG': 'STOP'
+  };
+
+
+
   console.log("I am running correctly.");
 
   return {
@@ -247,7 +317,8 @@ var bioKit = (function () {
     aaCategoryColors: aaCategoryColors,
     aaColorsDomain: aaColorsDomain,
     aaColorsRange: aaColorsRange,
-    aaColors: aaColors
+    aaColors: aaColors,
+    codon: codon
   }
 
 })();

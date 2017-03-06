@@ -5,11 +5,12 @@ var computeComposition = (function () {
     d3.select('#gcOutput').style('display', 'block');
     d3.select('#transformOutput').style('display', 'none');
     d3.select('#primersOutput').style('display', 'none');
+    document.getElementById('translateOutput').style.display = 'none';
 
     var GC;
     var inputSeq = document.getElementById(input).value;
-    console.log(inputSeq);
-    console.log(bioKit);
+    // console.log(inputSeq);
+    // console.log(bioKit);
     var seq = bioKit.prepSeq(inputSeq);
     var bases = bioKit.countBase(seq);
     var length = "The length of your input sequence is " + (seq.length) + " bp, ";

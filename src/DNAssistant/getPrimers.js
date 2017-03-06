@@ -8,10 +8,18 @@ function getPrimers(inputId, outputId) {
   d3.select('#gcOutput').style('display', 'none');
   d3.select('#transformOutput').style('display', 'none');
   d3.select('#primersOutput').style('display', 'block');
+  document.getElementById('translateOutput').style.display = 'none';
   document.getElementById(outputId).innerHTML = '';
 
   var inputSeq = document.getElementById(inputId).value;
   var seq = bioKit.prepSeq(inputSeq);
+
+  for (var k = 0; k < seq.length; k++) {
+    if (['A', 'T', 'G', 'C'].indexOf(seq[k]) === -1) {
+      alert(`Illegal character ${seq[k]} found in the sequence!`);
+      return;
+    }
+  }
 
   var sensePr = [];
   var antisensePr = [];
