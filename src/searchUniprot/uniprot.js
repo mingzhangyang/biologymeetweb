@@ -14,6 +14,11 @@ function search() {
     method: 'GET',
     crossDomain: true,
     success: function (res) {
+      if (!res) {
+        var msg = 'No results found on UniProtKB. Try another search!';
+        document.getElementById('output').innerHTML = `<h2>${msg}</h2>`;
+        return;
+      }
       var data = readTSV(res, true);
       var html = prepTable(data);
       document.getElementById('output').innerHTML = html;
