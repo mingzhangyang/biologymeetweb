@@ -1,0 +1,181 @@
+[
+  {
+    "entrezDatabase": "BioProject",
+    "uid": "BioProject ID",
+    "EutilityName": "bioproject"
+  },
+  {
+    "entrezDatabase": "BioSample",
+    "uid": "BioSample ID",
+    "EutilityName": "biosample"
+  },
+  {
+    "entrezDatabase": "Biosystems",
+    "uid": "BSID",
+    "EutilityName": "biosystems"
+  },
+  {
+    "entrezDatabase": "Books",
+    "uid": "Book ID",
+    "EutilityName": "books"
+  },
+  {
+    "entrezDatabase": "Conserved Domains",
+    "uid": "PSSM-ID",
+    "EutilityName": "cdd"
+  },
+  {
+    "entrezDatabase": "dbGaP",
+    "uid": "dbGaP ID",
+    "EutilityName": "gap"
+  },
+  {
+    "entrezDatabase": "dbVar",
+    "uid": "dbVar ID",
+    "EutilityName": "dbvar"
+  },
+  {
+    "entrezDatabase": "Epigenomics",
+    "uid": "Epigenomics ID",
+    "EutilityName": "epigenomics"
+  },
+  {
+    "entrezDatabase": "EST",
+    "uid": "GI number",
+    "EutilityName": "nucest"
+  },
+  {
+    "entrezDatabase": "Gene",
+    "uid": "Gene ID",
+    "EutilityName": "gene"
+  },
+  {
+    "entrezDatabase": "Genome",
+    "uid": "Genome ID",
+    "EutilityName": "genome"
+  },
+  {
+    "entrezDatabase": "GEO Datasets",
+    "uid": "GDS ID",
+    "EutilityName": "gds"
+  },
+  {
+    "entrezDatabase": "GEO Profiles",
+    "uid": "GEO ID",
+    "EutilityName": "geoprofiles"
+  },
+  {
+    "entrezDatabase": "GSS",
+    "uid": "GI number",
+    "EutilityName": "nucgss"
+  },
+  {
+    "entrezDatabase": "HomoloGene",
+    "uid": "HomoloGene ID",
+    "EutilityName": "homologene"
+  },
+  {
+    "entrezDatabase": "MeSH",
+    "uid": "MeSH ID",
+    "EutilityName": "mesh"
+  },
+  {
+    "entrezDatabase": "NCBI C++ Toolkit",
+    "uid": "Toolkit ID",
+    "EutilityName": "toolkit"
+  },
+  {
+    "entrezDatabase": "NCBI Web Site",
+    "uid": "Web Site ID",
+    "EutilityName": "ncbisearch"
+  },
+  {
+    "entrezDatabase": "NLM Catalog",
+    "uid": "NLM Catalog ID",
+    "EutilityName": "nlmcatalog"
+  },
+  {
+    "entrezDatabase": "Nucleotide",
+    "uid": "GI number",
+    "EutilityName": "nuccore"
+  },
+  {
+    "entrezDatabase": "OMIA",
+    "uid": "OMIA ID",
+    "EutilityName": "omia"
+  },
+  {
+    "entrezDatabase": "PopSet",
+    "uid": "PopSet ID",
+    "EutilityName": "popset"
+  },
+  {
+    "entrezDatabase": "Probe",
+    "uid": "Probe ID",
+    "EutilityName": "probe"
+  },
+  {
+    "entrezDatabase": "Protein",
+    "uid": "GI number",
+    "EutilityName": "protein"
+  },
+  {
+    "entrezDatabase": "Protein Clusters",
+    "uid": "Protein Cluster ID",
+    "EutilityName": "proteinclusters"
+  },
+  {
+    "entrezDatabase": "PubChem BioAssay",
+    "uid": "AID",
+    "EutilityName": "pcassay"
+  },
+  {
+    "entrezDatabase": "PubChem Compound",
+    "uid": "CID",
+    "EutilityName": "pccompound"
+  },
+  {
+    "entrezDatabase": "PubChem Substance",
+    "uid": "SID",
+    "EutilityName": "pcsubstance"
+  },
+  {
+    "entrezDatabase": "PubMed",
+    "uid": "PMID",
+    "EutilityName": "pubmed"
+  },
+  {
+    "entrezDatabase": "PubMed Central",
+    "uid": "PMCID",
+    "EutilityName": "pmc"
+  },
+  {
+    "entrezDatabase": "SNP",
+    "uid": "rs number",
+    "EutilityName": "snp"
+  },
+  {
+    "entrezDatabase": "SRA",
+    "uid": "SRA ID",
+    "EutilityName": "sra"
+  },
+  {
+    "entrezDatabase": "Structure",
+    "uid": "MMDB-ID structure"
+  },
+  {
+    "entrezDatabase": "Taxonomy",
+    "uid": "TaxID",
+    "EutilityName": "taxonomy"
+  },
+  {
+    "entrezDatabase": "UniGene",
+    "uid": "UniGene Cluster ID",
+    "EutilityName": 'unigene'
+  },
+  {
+    "entrezDatabase": "UniSTS",
+    "uid": "STS ID",
+    "EutilityName": "unists"
+  }
+]
