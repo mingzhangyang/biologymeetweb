@@ -11,6 +11,9 @@
             position: absolute;
             left: 150px;
         }
+        h2 {
+            color: darkolivegreen;
+        }
         #box {
             position: absolute;
             left: 150px;
@@ -42,6 +45,7 @@
         }
         a {
             color: blue;
+            cursor: pointer;
         }
         a:link {
             text-decoration: none;
@@ -60,13 +64,39 @@
         a:active {
             text-decoration: underline;
         }
+        input {
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            height: 30px;
+            font-size: 14pt;
+            padding-left: 12px;
+        }
+        input:focus {
+            background-color: lightcyan;
+            border: 2px solid yellowgreen;
+        }
+        button {
+            height: 30px;
+            border-radius: 2px;
+            font-size: 14pt;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            display: inline-block;
+            margin: 4px 2px;
+            cursor: pointer;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
     </style>
 </head>
 <body>
 <h1>Search UniProtKB</h1>
 <div id="box">
     <input type="text" id="query"/>
-    <button onclick="search()">Search!</button>
+    <button onclick="search()">Search</button>
     <div id="output"></div>
 </div>
 </body>
