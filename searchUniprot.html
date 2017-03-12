@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="images/myLogo.png"/>
+    <title>Search Uniprot Easily</title>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="src/searchUniprot/uniprot.js"></script>
+    <style>
+        h1 {
+            position: absolute;
+            left: 150px;
+        }
+        #box {
+            position: absolute;
+            left: 150px;
+            top: 80px;
+        }
+        table {
+            border-collapse: collapse;
+            position: relative;
+            top: 10px;
+            empty-cells: hide;
+        }
+        th {
+            height: 30px;
+            background-color: #2b669a;
+            color: whitesmoke;
+        }
+        th, td {
+            padding: 10px;
+            max-width: 200px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        tr:hover {
+            background-color: wheat;
+        }
+        .folded {
+            display: none;
+        }
+        a {
+            color: blue;
+        }
+        a:link {
+            text-decoration: none;
+        }
+
+        a:visited {
+            text-decoration: none;
+            background-color: cyan;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            background-color: lightgreen;
+        }
+
+        a:active {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>Search UniProtKB</h1>
+<div id="box">
+    <input type="text" id="query"/>
+    <button onclick="search()">Search!</button>
+    <div id="output"></div>
+</div>
+</body>
+</html>
