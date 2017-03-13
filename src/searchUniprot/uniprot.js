@@ -73,7 +73,8 @@ ${line[j]}</a>`;
 
 function clickShow(elem) {
   var row = elem.parentNode.parentNode;
-  var entry = row.firstChild.textContent;
+  var entry = row.firstChild.firstChild.textContent;
+  entry = entry.trim();
   getEntry(entry);
 }
 
@@ -87,12 +88,15 @@ function getEntry(entry) {
       document.getElementById(entry).innerText = res;
       document.getElementById(entry).parentNode.style.display = 'table-row';
     },
-    error: function (err) {console.log(err);}
+    error: function (err) {
+      console.log(err);
+      console.log(url);
+    }
   });
 }
 
 function clickHide(elem) {
   var row = elem.parentNode.parentNode;
-  var entry = row.firstChild.textContent;
+  var entry = row.firstChild.firstChild.textContent.trim();
   document.getElementById(entry).parentNode.style.display = 'none';
 }
