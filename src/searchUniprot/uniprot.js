@@ -20,8 +20,7 @@ function search() {
         return;
       }
       var data = readTSV(res, true);
-      var html = prepTable(data);
-      document.getElementById('output').innerHTML = html;
+      document.getElementById('output').innerHTML = prepTable(data);
     },
     error: function (err) {console.log(err);}
   });
@@ -53,6 +52,11 @@ function search() {
         var row = '<tr>';
         var line = data.td[i].split('\t');
         for (var j = 0; j < line.length; j++) {
+          if (j === 0) {
+            row += `<td><a href="http://www.uniprot.org/uniprot/${line[j]}">
+${line[j]}</a>`;
+            continue;
+          }
           row += `<td>${line[j]}</td>`;
         }
         row += '<td><a' +
@@ -69,7 +73,8 @@ function search() {
 
 function clickShow(elem) {
   var row = elem.parentNode.parentNode;
-  var entry = row.firstChild.textContent;
+  var entry = row.firstChild.firstChild.textContent;
+  entry = entry.trim();
   getEntry(entry);
 }
 
@@ -83,12 +88,15 @@ function getEntry(entry) {
       document.getElementById(entry).innerText = res;
       document.getElementById(entry).parentNode.style.display = 'table-row';
     },
-    error: function (err) {console.log(err);}
+    error: function (err) {
+      console.log(err);
+      console.log(url);
+    }
   });
 }
 
 function clickHide(elem) {
   var row = elem.parentNode.parentNode;
-  var entry = row.firstChild.textContent;
+  var entry = row.firstChild.firstChild.textContent.trim();
   document.getElementById(entry).parentNode.style.display = 'none';
 }
