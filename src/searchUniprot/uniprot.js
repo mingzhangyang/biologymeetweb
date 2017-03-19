@@ -8,6 +8,12 @@ function search() {
   var opts = '&limit=8&sort=score&columns=id,entry' +
     ' name,protein names,organism,length&format=tab';
   var query = document.getElementById('query').value;
+  if (!query) {
+    alert('Please provide your search query! :-)');
+    return;
+  }
+  document.getElementById('hint').style.display = 'none';
+  document.getElementById('uniprotIntro').style.display = 'none';
   var url = baseUrl + `query=${query}` + opts;
   $.ajax({
     url: url,
@@ -22,7 +28,10 @@ function search() {
       var data = readTSV(res, true);
       document.getElementById('output').innerHTML = prepTable(data);
     },
-    error: function (err) {console.log(err);}
+    error: function (err) {
+      console.log(err);
+      document.getElementById('output').innerHTML = `<h2>Error:</h2><p>${err}</p>`;
+    }
   });
 
   function readTSV(str, head) {
