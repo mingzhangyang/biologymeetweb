@@ -5,7 +5,7 @@
 
 function search() {
   var baseUrl = 'http://www.uniprot.org/uniprot/?';
-  var opts = '&limit=8&sort=score&columns=id,entry' +
+  var opts = '&limit=10&sort=score&columns=id,entry' +
     ' name,protein names,organism,length&format=tab';
   var query = document.getElementById('query').value;
   if (!query) {
