@@ -31,7 +31,9 @@ function search() {
     error: function (err) {
       document.getElementById('output').innerHTML = `<h2>Error:</h2><p style="background-color: lightgoldenrodyellow;">Have you checked the reminding 
 message of your browser and loaded the script to fire request to UniProt 
-database?</p><ul><li>Chrome Desktop browser users please check the shield icon on the right of address bar.</li></ul>`;
+database?</p><ul><li>Chrome desktop browser users please check the shield 
+icon on the very right of address bar.</li><li>Firefox desktop browser users 
+please check the info icon on the very left of the address bar.</li><li>For IE or Edge users please try Chrome or Firefox browser.</li></ul>`;
     }
   });
 
