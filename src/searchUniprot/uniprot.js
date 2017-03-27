@@ -29,11 +29,13 @@ function search() {
       document.getElementById('output').innerHTML = prepTable(data);
     },
     error: function (err) {
-      document.getElementById('output').innerHTML = `<h2>Error:</h2><p style="background-color: lightgoldenrodyellow;">Have you checked the reminding 
-message of your browser and loaded the script to fire request to UniProt 
-database?</p><ul><li>Chrome desktop browser users please check the shield 
-icon on the very right of address bar.</li><li>Firefox desktop browser users 
-please check the info icon on the very left of the address bar.</li><li>For IE or Edge users please try Chrome or Firefox browser.</li></ul>`;
+      document.getElementById('output').innerHTML = `<h2>Error:</h2><p style="background-color: lightgoldenrodyellow;"><h4>The
+    error is caused by "<a href="https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content">mixed content</a>". You are currently on Github page which is on a secure HTTPS
+    connection. But Uniprot supports only the unsecure HTTP connection
+    currently. As a result, the browser prevents making requests to Uniprot
+    database.</h4><h3>Solution:</h3><ul><li>Chrome desktop browser users
+    please check the shield icon on the very right of the address bar
+    .</li><li>Firefox desktop browser users please check the info icon on the very left of the address bar.</li><li>For IE or Edge users please try Chrome or Firefox browser.</li></ul>`;
     }
   });
 
