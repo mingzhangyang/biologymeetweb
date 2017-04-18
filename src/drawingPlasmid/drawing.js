@@ -75,7 +75,7 @@ var drawing = (function drawing() {
     var props = Object.keys(obj);
     var result = '';
     for (var prop of props) {
-      result += (prop + ': ' + obj[prop] + '; ');
+      result += (prop + ': ' + obj[prop] + ';');
     }
     return result;
   }
