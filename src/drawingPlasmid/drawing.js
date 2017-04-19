@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var drawing = (function drawing() {
+var drawingAlongCircle = (function drawing() {
   function drawArc(params) {
     params = params || {};
     var center = params.center || [100, 100];
@@ -170,7 +170,7 @@ var drawing = (function drawing() {
    * draw arrows on a circle
    * startAngle and endAngle should be radian not degree.
    */
-  function drawArrow(params) {
+  function drawAngle(params) {
     params = params || {};
     var x = params.center[0] || 100;
     var y = params.center[1] || 100;
@@ -327,13 +327,40 @@ var drawing = (function drawing() {
 //     fill: 'blue'
 //   }
 // }));
+
+  function drawArrow(params) {
+    params = params || {};
+    var start = params.start || [10, 10];
+    var end = params.end || [50, 10];
+    var angle = params.angle ? param.angle / 180 * Math.PI : Math.PI / 4;
+    var len = params.len || 5;
+    var style = params.style ? styleObjectToString(params.style) : '';
+    var close = params.close || false;
+
+    var d = Math.sqrt((start[0] - end[0])*(start[0] - end[0]) + (start[1] - end[1])*(start[1] - end[1]));
+    var alpha = Math.asin((start[0] - end[0]) / d);
+
+    var x1 = end[0] + len * Math.sin(alpha - angle);
+    var y1 = end[1] - len * Math.cos(alpha - angle);
+    var x2 = end[0] + len * Math.sin(alpha + angle);
+    var y2 = end[1] - len * Math.cos(alpha + angle);
+
+    if (close) {
+      return `<g style="${style}"><path d="M${x1} ${y1} L ${end[0]} ${end[1]} L ${x2} ${y2} Z"></path><path d="M${start[0]} ${start[1]} L ${end[0]} ${end[1]}"></path></g>`;
+    }
+    return `<g style="${style}"><path d="M${x1} ${y1} L ${end[0]} ${end[1]} L ${x2} ${y2}"></path><path d="M${start[0]} ${start[1]} L ${end[0]} ${end[1]}"></path></g>`;
+  }
+
+
+
   return {
     arc: drawArc,
     arcWithArrow: drawArcWithArrow,
     sector: drawSector,
     annulus: drawAnnulus,
     annulusWithArrow: drawAnnulusWithArrow,
-    bar: drawBar,
-    arrow: drawArrow
+    arrow: drawArrow,
+    barOnCircle: drawBar,
+    angleAlongCircle: drawAngle
   }
 })();
