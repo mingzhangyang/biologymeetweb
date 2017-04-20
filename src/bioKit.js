@@ -301,6 +301,29 @@ var bioKit = (function () {
     'TAG': 'STOP'
   };
 
+  var PROTEIN_TAGS = [
+    ["FLAG","DYKDDDDK"],
+    ["FLAG","DYKDHDI"],
+    ["FLAG","DYKDHDG"],
+    ["VSVG Tag","YTDIEMNRLGK"],
+    ["SV40 NLS","PKKKRKV"],
+    ["SV40 NLS","PKKKRKVG"],
+    ["T7 Tag", "MASMTGGQQMG"],
+    ["NLS", "KKRKV"],
+    ["HA","YPYDVPDYA"],
+    ["6xHIS","HHHHHH"],
+    ["Myc","EQKLISEEDL"],
+    ["TEV","ENLYFQG"],
+    ["TEV","ENPYFQG"],
+    ["Myr","MGSNKSKPKDASQRR"],
+    ["Myr","MGSSKSKPKDPSQRA"],
+    ["V5","GKPIPNPLLGLDST"],
+    ["S15","KETAAAKFERQHMDS"],
+    ["Strep Tag","WSHPQFEK"]
+  ];
+
+
+
 
 
   console.log("I am running correctly.");
@@ -318,7 +341,8 @@ var bioKit = (function () {
     aaColorsDomain: aaColorsDomain,
     aaColorsRange: aaColorsRange,
     aaColors: aaColors,
-    codon: codon
+    codon: codon,
+    proteinTags: PROTEIN_TAGS
   }
 
 })();
