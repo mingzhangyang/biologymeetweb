@@ -5,6 +5,14 @@
 
 var myc = (function () {
 
+  function setPoint(obj) {
+    obj = obj || {center: [0, 0], r: 0, angle: 0};
+    return {
+      x: obj.center[0] + obj.r * Math.sin(obj.angle),
+      y: obj.center[1] - obj.r * Math.cos(obj.angle)
+    }
+  }
+
   function drawArc(params) {
     params = params || {};
     var center = params.center || [100, 100];
@@ -421,7 +429,10 @@ var myc = (function () {
     sector: drawSector,
     arrow: drawArrow,
     angle: drawAngle,
-    bar: drawBar
+    bar: drawBar,
+    point: setPoint
   }
 
 })();
+
+console.log(myc.point());

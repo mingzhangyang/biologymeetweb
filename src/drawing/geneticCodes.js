@@ -522,7 +522,7 @@ function draw(r, d) {
     for (let i = 0; i < arr.length; i++) {
       let t = {};
       t.name = obj.name + arr[i];
-      t.innerR = obj.outerR > r ? obj.outerR : 0;
+      t.innerR = obj.outerR  > r ? obj.outerR : 0;
       t.outerR = obj.outerR + d;
       t.startAngle = obj.startAngle + angle * i;
       t.endAngle = obj.startAngle + angle * (i + 1);
@@ -608,7 +608,9 @@ function draw(r, d) {
       angle: (tmp.startAngle + tmp.endAngle) / 2 / 180 * Math.PI
     });
 
-    tmp.textRotation = (tmp.startAngle + tmp.endAngle) / 2 - 90;
+    let ang = (tmp.startAngle + tmp.endAngle) / 2 - 90;
+
+    tmp.textRotation = ang > 90 ? ang - 180 : ang;
 
     fourC.push(tmp);
 
