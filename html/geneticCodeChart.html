@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../images/myLogo.png"/>
+    <title>Genetic Code Chart - BiologyMeetWeb</title>
+    <style>
+        #container {
+            display: flex;
+            width: 1200px;
+            margin: auto;
+        }
+        #colorObj {
+            width: 240px;
+            background-color: #5cb85c;
+            margin-left: auto;
+        }
+        #chartArea {
+            width: 720px;
+            background-color: #00d6b2;
+            height: 720px;
+            text-align: center;
+            margin-right: auto;
+        }
+        .label {
+            display: inline-block;
+            width: 48px;
+            margin-left: 30px;
+        }
+        svg text {
+            fill: #000;
+        }
+        input {
+            margin-top: 1px;
+            width: 100px;
+            height: 20px;
+            /*background-color: #5cb85c;*/
+            padding-left: 20px;
+        }
+        #A {
+            margin-top: 20px;
+        }
+        input:focus {
+            background-color: wheat;
+        }
+    </style>
+    <script src="../src/drawing/myc.js"></script>
+</head>
+<body>
+<div id="container">
+    <div id="colorObj">
+
+    </div>
+    <div id="chartArea">
+        <svg width="720" height="720" fill="#00d6b2">
+            <g id="chart" transform="translate(360 360)">
+
+            </g>
+        </svg>
+    </div>
+</div>
+<script src="../src/drawing/geneticCodes.js"></script>
+
+</body>
+</html>

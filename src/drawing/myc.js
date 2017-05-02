@@ -435,4 +435,4 @@ var myc = (function () {
 
 })();
 
-console.log(myc.point());
+// console.log(myc.point());
