@@ -436,3 +436,9 @@ var myc = (function () {
 })();
 
 // console.log(myc.point());
+
+if (module.parent) {
+  module.exports = myc;
+} else if (typeof window === 'undefined') {
+  console.log('Running in browser!');
+}
