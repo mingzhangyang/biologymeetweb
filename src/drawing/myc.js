@@ -6,11 +6,27 @@
 var myc = (function () {
 
   function setPoint(obj) {
-    obj = obj || {center: [0, 0], r: 0, angle: 0};
+    obj = obj || {center: [0, 0], r: 0, angle: 0}; // angle should be radian
     return {
-      x: obj.center[0] + obj.r * Math.sin(obj.angle),
-      y: obj.center[1] - obj.r * Math.cos(obj.angle)
+      x: obj.center[0] + obj.r * Math.sin(obj.angle), // not degree angle
+      y: obj.center[1] - obj.r * Math.cos(obj.angle) // not degree angle
     }
+  }
+
+  function drawCircle(params) {
+    params = params || {};
+    var center = params.center || [100, 100];
+    var r = params.radius || 100;
+    var fill = params.fill || 'transparent';
+    var stroke = params.stroke || '#000';
+    var id = params.id || '';
+    var className = params.className || '';
+
+    if (id || className) {
+      return `<circle class="${className}" id="${id}" cx="${center[0]}" cy="${center[1]}" r="${r}" fill="${fill}" stroke="${stroke}"></circle>`;
+    }
+
+    return `<circle cx="${center[0]}" cy="${center[1]}" r="${r}" fill="${fill}" stroke="${stroke}"></circle>`;
   }
 
   function drawArc(params) {
@@ -19,6 +35,12 @@ var myc = (function () {
     var r = params.radius || 100;
     var angle = params.angle ? params.angle / 180 * Math.PI : Math.PI/2;
     var startAngle = params.startAngle ? params.startAngle / 180 * Math.PI : 0;
+
+    if (angle < 0) {
+      startAngle += angle;
+      angle = -angle;
+    }
+
     var lineWidth = params.lineWidth || '2px';
     var lineColor = params.lineColor || '#000';
     var id = params.id || '';
@@ -52,6 +74,12 @@ var myc = (function () {
     var r = params.radius || 100;
     var angle = params.angle ? params.angle / 180 * Math.PI : Math.PI/2;
     var startAngle = params.startAngle ? params.startAngle / 180 * Math.PI : 0;
+
+    if (angle < 0) {
+      startAngle += angle;
+      angle = -angle;
+    }
+
     var fill = params.fill || 'transparent';
     var lineColor = params.lineColor || '#000';
     var lineWidth = params.lineWidth || '2px';
@@ -117,6 +145,11 @@ var myc = (function () {
     var iR = params.innerRadius || (params.outerRadius ? params.outerRadius * 0.8 : 80);
     var startAngle = params.startAngle ? params.startAngle / 180 * Math.PI : 0;
     var angle = params.angle ? params.angle / 180 * Math.PI : Math.PI / 3;
+
+    if (angle < 0) {
+      throw new Error('angle should not be minus!');
+    }
+
     var center = params.center || [100, 100];
     var endAngle = startAngle + angle;
     var fill = params.fill || 'transparent';
@@ -253,6 +286,11 @@ var myc = (function () {
     var center = params.center || [100, 100];
     var startAngle = params.startAngle ? params.startAngle / 180 * Math.PI : 0;
     var angle = params.angle ? params.angle / 180 * Math.PI : Math.PI / 3;
+
+    if (angle < 0) {
+      throw new Error('angle should not be minus!');
+    }
+
     var iR = params.innerRadius || (params.outerRadius ? params.outerRadius * 0.8 : 80);
     var oR = params.outerRadius || (params.innerRadius ? params.innerRadius * 1.2 : 100);
     var forward = (params.forward === undefined) ?  true : params.forward;
@@ -333,12 +371,18 @@ var myc = (function () {
     var r = params.radius || 100;
     var startAngle = params.startAngle ? params.startAngle / 180 * Math.PI : 0;
     var angle = params.angle ? params.angle / 180 * Math.PI : Math.PI / 3;
+
+    if (angle < 0) {
+      throw new Error('angle should not be minus!');
+    }
+
     var len = params.size || r * 0.1;
     var forward = (params.forward === undefined) ? true : params.forward;
     var close = params.close || false;
     var id = params.id || '';
     var lineWidth = params.lineWideth || '2px';
     var lineColor = params.lineColor || '#000';
+    var arrowColor = params.arrowColor || '#000';
 
     var rot = 0;
     var laf = angle > Math.PI ? 1 : 0;
@@ -351,29 +395,30 @@ var myc = (function () {
     x2 = center[0] + r * Math.sin(startAngle + angle);
     y2 = center[1] - r * Math.cos(startAngle + angle);
 
+    let arrowSpan = angle / 10;
     if (forward) {
-      x3 = center[0] + (r + len) * Math.sin(startAngle + angle - Math.PI/18);
-      y3 = center[1] - (r + len) * Math.cos(startAngle + angle - Math.PI/18);
-      x4 = center[0] + (r - len) * Math.sin(startAngle + angle - Math.PI/18);
-      y4 = center[1] - (r - len) * Math.cos(startAngle + angle - Math.PI/18);
+      x3 = center[0] + (r + len) * Math.sin(startAngle + angle - arrowSpan);
+      y3 = center[1] - (r + len) * Math.cos(startAngle + angle - arrowSpan);
+      x4 = center[0] + (r - len) * Math.sin(startAngle + angle - arrowSpan);
+      y4 = center[1] - (r - len) * Math.cos(startAngle + angle - arrowSpan);
 
       if (!close) {
         return `<g id="${id}" stroke="${lineColor}" stroke-width="${lineWidth}"><path d="M${x1} ${y1} A ${r} ${r}, ${rot}, ${laf}, ${sf}, ${x2} ${y2}"></path><path d="M${x3} ${y3} L ${x2} ${y2} L ${x4} ${y4}"></path></g>`;
       } else {
-        return `<g id="${id}" stroke="${lineColor}" stroke-width="${lineWidth}"><path d="M${x1} ${y1} A ${r} ${r}, ${rot}, ${laf}, ${sf}, ${x2} ${y2}" fill="transparent"></path><path d="M${x3} ${y3} L ${x2} ${y2} L ${x4} ${y4} Z"></path></g>`;
+        return `<g id="${id}" stroke="${lineColor}" stroke-width="${lineWidth}"><path d="M${x1} ${y1} A ${r} ${r}, ${rot}, ${laf}, ${sf}, ${x2} ${y2}" fill="transparent"></path><path d="M${x3} ${y3} L ${x2} ${y2} L ${x4} ${y4} Z" fill="${arrowColor}"></path></g>`;
       }
 
     } else {
 
-      x3 = center[0] + (r + len) * Math.sin(startAngle + Math.PI/18);
-      y3 = center[1] - (r + len) * Math.cos(startAngle + Math.PI/18);
-      x4 = center[0] + (r - len) * Math.sin(startAngle + Math.PI/18);
-      y4 = center[1] - (r - len) * Math.cos(startAngle + Math.PI/18);
+      x3 = center[0] + (r + len) * Math.sin(startAngle + arrowSpan);
+      y3 = center[1] - (r + len) * Math.cos(startAngle + arrowSpan);
+      x4 = center[0] + (r - len) * Math.sin(startAngle + arrowSpan);
+      y4 = center[1] - (r - len) * Math.cos(startAngle + arrowSpan);
 
       if (!close) {
         return `<g id="${id}" stroke="${lineColor}" stroke-width="${lineWidth}"><path d="M${x1} ${y1} A ${r} ${r}, ${rot}, ${laf}, ${sf}, ${x2} ${y2}"></path><path d="M${x3} ${y3} L ${x1} ${y1} L ${x4} ${y4}"></path></g>`;
       } else {
-        return `<g id="${id}" stroke="${lineColor}" stroke-width="${lineWidth}"><path d="M${x1} ${y1} A ${r} ${r}, ${rot}, ${laf}, ${sf}, ${x2} ${y2}" fill="transparent;"></path><path d="M${x3} ${y3} L ${x1} ${y1} L ${x4} ${y4} Z"></path></g>`;
+        return `<g id="${id}" stroke="${lineColor}" stroke-width="${lineWidth}"><path d="M${x1} ${y1} A ${r} ${r}, ${rot}, ${laf}, ${sf}, ${x2} ${y2}" fill="transparent"></path><path d="M${x3} ${y3} L ${x1} ${y1} L ${x4} ${y4} Z" fill="${arrowColor}"></path></g>`;
       }
     }
   }
@@ -421,16 +466,60 @@ var myc = (function () {
 //   close: true
 // }));
 
+  function drawTextAlongArc(params) {
+    params = params || {};
+    let center = params.center || [0, 0];
+    let txt = params.text || 'Hello World';
+    let startAngle = params.startAngle ? params.startAngle / 180 * Math.PI : 0;
+    let r = params.radius || 200;
+    let angle = params.angle ? params.angle / 180 * Math.PI : Math.PI / 2;
+    let id = params.id;
+    let fontSize = params.fontSize || '24px';
+
+    if (typeof id === 'undefined') {
+      throw new Error('Id is required!');
+    }
+
+    if (angle < 0) {
+      throw new Error('angle should not be minus!');
+    }
+
+    var rot = 0;
+    var laf = angle > Math.PI ? 1 : 0;
+    var sf = 1;
+
+    var startPoint = setPoint({
+      center: center,
+      r: r,
+      angle: startAngle
+    });
+
+    var endPoint = setPoint({
+      center: center,
+      r: r,
+      angle: startAngle + angle
+    });
+
+    var defs = `<defs><path id="${id}" d="M${startPoint.x} ${startPoint.y} A ${r} ${r}, ${rot}, ${laf}, ${sf}, ${endPoint.x} ${endPoint.y}"></path></defs>`;
+    var text = `<use xlink:href="#${id}" fill="none" stroke="#f66"></use><text font-size="${fontSize}"><textPath xlink:href="#${id}">${txt}</textPath></text>`;
+
+    return '<g>' + defs + text + '</g>';
+  }
+
+
+
   return {
     arc: drawArc,
     arcWithArrow: drawArcWithArrow,
     annulus: drawAnnulus,
     annulusWithArrow: drawAnnulusWithArrow,
+    circle: drawCircle,
     sector: drawSector,
     arrow: drawArrow,
     angle: drawAngle,
     bar: drawBar,
-    point: setPoint
+    point: setPoint,
+    textAlongArc: drawTextAlongArc
   }
 
 })();
@@ -440,5 +529,15 @@ var myc = (function () {
 if (module.parent) {
   module.exports = myc;
 } else if (typeof window === 'undefined') {
-  console.log('Running in browser!');
+  // console.log('Running in browser!');
+  // console.log(myc.arc({
+  //   angle: -270
+  // }));
+  console.log(myc.textAlongArc({
+    center: [0, 0],
+    radius: 250,
+    id: 'myPath',
+    startAngle: 30,
+    angle: 27
+  }))
 }
