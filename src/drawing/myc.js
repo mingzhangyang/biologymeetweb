@@ -524,8 +524,10 @@ var myc = (function () {
     let oR = config.outerRadius || 200;
     let center = config.center || [250, 250];
     let strokeWidth = config.strokeWidth || 2;
-    let strokeColor = config.strokeColor || '#000';
+    let strokeColor = config.strokeColor || 'none';
     let colorFunc = config.colorFunc;
+    let takeOut = config.takeOut || [];
+    let notationPos = config.notationPos || 'in';
 
     let sum = data.reduce(function (acc, d) {
       return acc + d.value;
@@ -544,24 +546,46 @@ var myc = (function () {
     // console.log(data);
 
     let code = '';
+    function toPercentage(v, sum) {
+      return (v / sum * 100).toFixed(2) + '%';
+    }
 
     for (let i = 0; i < data.length; i++) {
-      code += drawAnnulus({
-        center: center,
-        innerRadius: iR,
-        outerRadius: oR,
-        startAngle: data[i].startAngle,
-        angle: data[i].angle,
-        lineWidth: strokeWidth,
-        lineColor: strokeColor,
-        fill: colorFunc ? colorFunc(data[i]) : randomColor()
-      });
-      let point = setPoint({
-        center: center,
-        r: (iR + oR) / 2,
-        angle: (data[i].startAngle + data[i].angle / 2)
-      });
-      code += `<text x="${point.x}" y="${point.y}" text-anchor="middle" alignment-baseline="middle">${data[i].name}(${data[i].value})</text>`;
+      let startAngle = data[i].startAngle;
+      let angle = data[i].angle;
+      if (angle !== 0) {
+        let newCenter = undefined;
+        if (takeOut.includes(data[i].name)) {
+          let coor = setPoint({
+            center: center,
+            r: 50,
+            angle: startAngle + angle / 2
+          });
+          newCenter = [coor.x, coor.y];
+        }
+
+        let fillColor = colorFunc ? colorFunc(data[i]) : randomColor();
+        if (fillColor === 'random') {
+          fillColor = randomColor();
+        }
+
+        code += drawAnnulus({
+          center: newCenter ? newCenter : center,
+          innerRadius: iR,
+          outerRadius: oR,
+          startAngle: startAngle,
+          angle: angle,
+          lineWidth: strokeWidth,
+          lineColor: strokeColor,
+          fill: fillColor
+        });
+        let point = setPoint({
+          center: newCenter ? newCenter : center,
+          r: notationPos === 'in' ? (iR + oR) / 2 : oR + 50,
+          angle: (data[i].startAngle + data[i].angle / 2)
+        });
+        code += `<text x="${point.x}" y="${point.y}" text-anchor="middle" alignment-baseline="middle">${data[i].name}(${toPercentage(data[i].value, sum)})</text>`;
+      }
     }
 
     return code;
@@ -590,36 +614,42 @@ var myc = (function () {
 
 // console.log(myc.point());
 
-if (module.parent) {
-  module.exports = myc;
-} else if (typeof window === 'undefined') {
-  // console.log('Running in browser!');
-  // console.log(myc.arc({
-  //   angle: -270
-  // }));
-  // console.log(myc.textAlongArc({
-  //   center: [0, 0],
-  //   radius: 250,
-  //   id: 'myPath',
-  //   startAngle: 30,
-  //   angle: 27
-  // }));
-  // console.log(myc.randomColor());
-
-  console.log(myc.pieChart([{
-    name: 'A',
-    value: 249
-  }, {
-    name: 'T',
-    value: 233
-  }, {
-    name: 'G',
-    value: 212
-  }, {
-    name: 'C',
-    value: 245
-  }], {
-    innerRadius: 100
-  }));
-
-}
+// if (module.parent) {
+//   module.exports = myc;
+// } else if (typeof window === 'undefined') {
+//   // console.log('Running in browser!');
+//   // console.log(myc.arc({
+//   //   angle: -270
+//   // }));
+//   // console.log(myc.textAlongArc({
+//   //   center: [0, 0],
+//   //   radius: 250,
+//   //   id: 'myPath',
+//   //   startAngle: 30,
+//   //   angle: 27
+//   // }));
+//   // console.log(myc.randomColor());
+//
+//   console.log(myc.pieChart([{
+//     name: 'A',
+//     value: 249
+//   }, {
+//     name: 'T',
+//     value: 233
+//   }, {
+//     name: 'G',
+//     value: 212
+//   }, {
+//     name: 'C',
+//     value: 245
+//   }, {
+//     name: 'U',
+//     value: 45
+//   }], {
+//     innerRadius: 100,
+//     strokeColor: myc.randomColor(),
+//     notationPos: 'out',
+//     takeOut: ['A']
+//   }));
+//
+// }
