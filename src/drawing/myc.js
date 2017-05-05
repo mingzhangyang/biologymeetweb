@@ -6,10 +6,11 @@
 var myc = (function () {
 
   function setPoint(obj) {
-    obj = obj || {center: [0, 0], r: 0, angle: 0}; // angle should be radian
+    obj = obj || {center: [0, 0], r: 0, angle: 0};
+    obj.angle = obj.angle / 180 * Math.PI;
     return {
-      x: obj.center[0] + obj.r * Math.sin(obj.angle), // not degree angle
-      y: obj.center[1] - obj.r * Math.cos(obj.angle) // not degree angle
+      x: obj.center[0] + obj.r * Math.sin(obj.angle),
+      y: obj.center[1] - obj.r * Math.cos(obj.angle)
     }
   }
 
@@ -142,7 +143,7 @@ var myc = (function () {
   function drawAnnulus(params) {
     params = params || {};
     var oR = params.outerRadius || (params.innerRadius ? params.innerRadius * 1.2 : 100);
-    var iR = params.innerRadius || (params.outerRadius ? params.outerRadius * 0.8 : 80);
+    var iR = typeof params.innerRadius !== 'undefined' ? params.innerRadius : (params.outerRadius ? params.outerRadius * 0.8 : 80);
     var startAngle = params.startAngle ? params.startAngle / 180 * Math.PI : 0;
     var angle = params.angle ? params.angle / 180 * Math.PI : Math.PI / 3;
 
@@ -506,6 +507,91 @@ var myc = (function () {
     return '<g>' + defs + text + '</g>';
   }
 
+  function randomColor() {
+    let r = Math.floor(256 * Math.random());
+    let g = Math.floor(256 * Math.random());
+    let b = Math.floor(256 * Math.random());
+    let a = Math.floor((0.2 + 0.8 * Math.random()) * 10) / 10;
+    return `rgba(${r},${g},${b},${a})`;
+  }
+
+
+  function drawPieChart(data, config) {
+    // data: [{name: n1, value: v1}, {name: n2, value: v3}, ...]
+    config = config || {};
+    let startAngle = config.startAngle || 0;
+    let iR = config.innerRadius || 0;
+    let oR = config.outerRadius || 200;
+    let center = config.center || [250, 250];
+    let strokeWidth = config.strokeWidth || 2;
+    let strokeColor = config.strokeColor || 'none';
+    let colorFunc = config.colorFunc;
+    let takeOut = config.takeOut || [];
+    let notationPos = config.notationPos || 'in';
+
+    let sum = data.reduce(function (acc, d) {
+      return acc + d.value;
+    }, 0);
+
+    for (let i = 0; i < data.length; i++) {
+      if (i === 0) {
+        data[i].startAngle = startAngle;
+        data[i].angle = data[i].value / sum * 360;
+        continue;
+      }
+      data[i].startAngle = data[i - 1].startAngle + data[i - 1].angle;
+      data[i].angle = data[i].value / sum * 360;
+    }
+
+    // console.log(data);
+
+    let code = '';
+    function toPercentage(v, sum) {
+      return (v / sum * 100).toFixed(2) + '%';
+    }
+
+    for (let i = 0; i < data.length; i++) {
+      let startAngle = data[i].startAngle;
+      let angle = data[i].angle;
+      if (angle !== 0) {
+        let newCenter = undefined;
+        if (takeOut.includes(data[i].name)) {
+          let coor = setPoint({
+            center: center,
+            r: 50,
+            angle: startAngle + angle / 2
+          });
+          newCenter = [coor.x, coor.y];
+        }
+
+        let fillColor = colorFunc ? colorFunc(data[i]) : randomColor();
+        if (fillColor === 'random') {
+          fillColor = randomColor();
+        }
+
+        code += drawAnnulus({
+          center: newCenter ? newCenter : center,
+          innerRadius: iR,
+          outerRadius: oR,
+          startAngle: startAngle,
+          angle: angle,
+          lineWidth: strokeWidth,
+          lineColor: strokeColor,
+          fill: fillColor
+        });
+        let point = setPoint({
+          center: newCenter ? newCenter : center,
+          r: notationPos === 'in' ? (iR + oR) / 2 : oR + 50,
+          angle: (data[i].startAngle + data[i].angle / 2)
+        });
+        code += `<text x="${point.x}" y="${point.y}" text-anchor="middle" alignment-baseline="middle">${data[i].name}(${toPercentage(data[i].value, sum)})</text>`;
+      }
+    }
+
+    return code;
+
+  }
+
 
 
   return {
@@ -519,25 +605,51 @@ var myc = (function () {
     angle: drawAngle,
     bar: drawBar,
     point: setPoint,
-    textAlongArc: drawTextAlongArc
+    textAlongArc: drawTextAlongArc,
+    randomColor: randomColor,
+    pieChart: drawPieChart
   }
 
 })();
 
 // console.log(myc.point());
 
-if (module.parent) {
-  module.exports = myc;
-} else if (typeof window === 'undefined') {
-  // console.log('Running in browser!');
-  // console.log(myc.arc({
-  //   angle: -270
-  // }));
-  console.log(myc.textAlongArc({
-    center: [0, 0],
-    radius: 250,
-    id: 'myPath',
-    startAngle: 30,
-    angle: 27
-  }))
-}
+// if (module.parent) {
+//   module.exports = myc;
+// } else if (typeof window === 'undefined') {
+//   // console.log('Running in browser!');
+//   // console.log(myc.arc({
+//   //   angle: -270
+//   // }));
+//   // console.log(myc.textAlongArc({
+//   //   center: [0, 0],
+//   //   radius: 250,
+//   //   id: 'myPath',
+//   //   startAngle: 30,
+//   //   angle: 27
+//   // }));
+//   // console.log(myc.randomColor());
+//
+//   console.log(myc.pieChart([{
+//     name: 'A',
+//     value: 249
+//   }, {
+//     name: 'T',
+//     value: 233
+//   }, {
+//     name: 'G',
+//     value: 212
+//   }, {
+//     name: 'C',
+//     value: 245
+//   }, {
+//     name: 'U',
+//     value: 45
+//   }], {
+//     innerRadius: 100,
+//     strokeColor: myc.randomColor(),
+//     notationPos: 'out',
+//     takeOut: ['A']
+//   }));
+//
+// }
