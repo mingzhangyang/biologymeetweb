@@ -1,0 +1,41 @@
+body {
+    background-color: #f0f0f2;
+}
+#container {
+    display: flex;
+    width: 1200px;
+    margin: auto;
+    padding-top: 50px;
+}
+#colorObj {
+    width: 240px;
+    background-color: #5cb85c;
+    margin-left: auto;
+    padding-top: 20px;
+}
+#chartArea {
+    width: 720px;
+    background-color: #00d6b2;
+    height: 720px;
+    text-align: center;
+    margin-right: auto;
+}
+.label {
+    display: inline-block;
+    width: 48px;
+    margin-left: 30px;
+}
+svg text {
+    fill: #000;
+}
+input {
+    margin-top: 1px;
+    width: 100px;
+    height: 20px;
+    /*background-color: #5cb85c;*/
+    padding-left: 20px;
+}
+
+input:focus {
+    background-color: wheat;
+}
