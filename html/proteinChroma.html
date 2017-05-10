@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../images/myLogo.png"/>
+    <title>Protein Chroma - BiologyMeetWeb</title>
+    <link rel="stylesheet" type="text/css" href="../css/proteinChroma.css">
+</head>
+<body>
+<div id="container">
+    <div>
+        <div id="notation">
+            <div id="title">
+                <span>Protein Chroma</span>
+            </div>
+            <h4>Description:</h4>
+            <ul>
+                <li>Each bar represents an amino acid.</li>
+                <li>The height of a bar stands for the molecular weight of
+                    the amino acid.</li>
+                <li>The color of a bar stands for the group of the amino
+                    acid, following the scheme below.</li>
+                <li style="list-style-type: none">
+                    <div id="colorScheme">
+                        <table>
+                            <tr><td>Small nonpolar</td><td>G, A, S, T</td><td id="orange">Orange</td></tr>
+                            <tr><td>Hydrophobic</td><td>C, V, I, L, P, F, Y, M, W</td><td id="green">Green</td></tr>
+                            <tr><td>Polar</td><td>N, Q, H</td><td id="magenta">Magenta</td></tr>
+                            <tr><td>Negatively charged</td><td>D, E</td><td id="red">Red</td></tr>
+                            <tr><td>Positively charged</td><td>K, R</td><td id="blue">Blue</td></tr>
+                        </table>
+                    </div>
+                </li>
+                <li>
+                    <button class="example" onclick="example(mlh1)"> Example
+                        1</button>
+                    <button class="example" onclick="example(msh6)"> Example
+                        2</button>
+                    <button class="example" onclick="example(tpr)"> Example
+                        3</button>
+                </li>
+            </ul>
+            <p><strong>Please input your protein sequence below!</strong></p>
+        </div>
+        <div id="inputArea">
+            <textarea id="inputbox" rows="10" cols="100"></textarea>
+            <button onclick="chroma()"> Generate </button>
+        </div>
+    </div>
+    <div id="chartArea">
+        <svg id="chart" width="890" height="300"></svg>
+    </div>
+</div>
+<script src="../src/drawing/proteinChroma.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+body {
+    background-color: #f0f0f2;
+    padding-top: 0;
+}
+#container {
+    background-color: beige;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    border: 1px silver solid;
+    padding-bottom: 30px;
+}
+#inputArea {
+    width: 725px;
+    margin: auto;
+    display: block;
+}
+textarea {
+    display: block;
+}
+svg {
+    margin: auto;
+    display: block;
+}
+td {
+    width: 200px;
+}
+#orange {
+    background-color: orange;
+    text-align: center;
+    color: white;
+}
+#green {
+    background-color: green;
+    text-align: center;
+    color: white;
+}
+#magenta {
+    background-color: magenta;
+    text-align: center;
+    color: white;
+}
+#red {
+    background-color: red;
+    text-align: center;
+    color: white;
+}
+#blue {
+    background-color: blue;
+    text-align: center;
+    color: white;
+}
+#colorScheme {
+    margin: 10px;
+}
+#notation {
+    width: 720px;
+    margin: auto;
+    padding-top: 10px;
+    /*text-align: center;*/
+}
+button {
+    /*float: right;*/
+    height: 25px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 5px;
+    background-color: #00d6b2;
+    border-style: none;
+    border-radius: 5px;
+}
+.example {
+    background-color: white;
+}
+#title {
+    text-align: center;
+    font-size: 40px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-stretch: expanded;
+}
+tr {
+    height: 25px;
+}
+ol {
+    line-height: 150%;
+}
+#chartArea {
+    padding-top: 30px;
+}
+svg {
+    margin: auto;
+    display: block;
+    /*border: 2px dotted white;*/
+}
