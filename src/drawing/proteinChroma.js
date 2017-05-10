@@ -17,7 +17,7 @@ let aaMW = {
   L: 131.2,
   K: 146.2,
   M: 149.2,
-  F: 165.2,
+  F: 145.2,
   P: 115.1,
   S: 105.1,
   T: 119.1,
@@ -64,31 +64,63 @@ let aaPI = {
 //   }
 // }
 
-function color(n) {
-  switch (Math.floor(n / 2)) {
-    case 1:
-      return 'red';
-    case 2:
-      return '#f66';
-    case 3:
-      return 'orange';
-    default:
-      return 'blue';
+// function color(n) {
+//   switch (Math.floor(n / 2)) {
+//     case 1:
+//       return 'red';
+//     case 2:
+//       return '#f66';
+//     case 3:
+//       return 'orange';
+//     default:
+//       return 'blue';
+//
+//   }
+// }
 
-  }
+function color(aa) {
+  let colorObj = {
+    H: 'magenta',
+    D: 'red',
+    R: 'blue',
+    F: 'green',
+    A: 'orange',
+    C: 'green',
+    G: 'orange',
+    Q: 'magenta',
+    E: 'red',
+    K: 'green',
+    L: 'green',
+    M: 'green',
+    N: 'magenta',
+    S: 'orange',
+    Y: 'green',
+    T: 'orange',
+    I: 'green',
+    W: 'green',
+    P: 'green',
+    V: 'green'
+  };
+  return colorObj[aa];
 }
 
-
 function draw(seq) {
-  let result = '<g stroke-width="3">';
+//   let axis = `<g id="axis" stroke="grey" stroke-width="2"><line x1="50" y1="20" x2="1050" y2="20"></line><line x1="50" y1="20"
+// x2="50" y2="14"></line><line x1="300" y1="20" x2="300" y2="14"></line><line x1="550" y1="20" x2="550" y2="14"></line><line x1="800" y1="20" x2="800" y2="14"></line><line x1="1050" y1="20" x2="1050" y2="14"></line></g>`;
+  let bars = '<g stroke-width="2" stroke-linecap="butt"' +
+    ' transform="translate(0 20)">';
   for (let i = 0; i < seq.length; i++) {
-    let len = Math.round(aaMW[seq[i]] / 2);
-    let col = color(aaPI[seq[i]]);
+    let len = Math.round(aaMW[seq[i]] / 8);
+    let col = color(seq[i]);
     let x = i % 200;
     let y = Math.floor(i / 200) + 1;
-    result += `<line class="${seq[i]}" x1="${x*5+50}" y1="${200 * y - 100 - len}" x2="${x*5+50}" y2="${200 * y - 100 + len}" stroke="${col}" ></line>`;
+    bars += `<line x1="${x*4+30}" y1="${100 * y - 50 - len}" x2="${x*4+30}" y2="${100 * y - 50 + len}" stroke="${col}" ></line>`;
+    if (x === 199) {
+      bars += `<text x="840" y="${100 * y - 50}" alignment-baseline="middle">${200 * y}</text>`
+    }
   }
-  return result + '</g>';
+
+  return bars + '</g>';
 }
 
 let mlh1 = `MSFVAGVIRRLDETVVNRIAAGEVIQRPANAIKEMIENCLDAKSTSIQVIVKEGGLKLIQ
@@ -183,12 +215,36 @@ LMHATAHSLVLVDELGRGTATFDGTAIANAVVKELAETIKCRTLFSTHYHSLVEDYSQNV
 AVRLGHMACMVENECEDPSQETITFLYKFIKGACPKSYGFNAARLANLPEEVIQKGHRKA
 REFEKMNQSLRLFREVCLASERSTVDAEAVHKLLTLIKEL`;
 
-function run(s) {
-  s = s.replace(/\s+/g, '');
-  console.log(draw(s));
+function example(seq) {
+  seq = seq.replace(/\s+/g, '');
+  let h = Math.ceil(seq.length / 200);
+  let svg = document.getElementById('chart');
+  svg.setAttribute('height', h * 100 + 50 + '');
+  let template;
+  try {
+    template = draw(seq);
+  } catch(err) {
+    alert(err);
+  }
+  svg.innerHTML = template;
 }
 
 // run(p53);
 // run(tpr);
 // run(h3);
-run(msh6);
+// run(msh6);
+
+function chroma() {
+  let seq = document.getElementById('inputbox').value;
+  seq = seq.replace(/\s+/g, '');
+  let h = Math.ceil(seq.length / 200);
+  let svg = document.getElementById('chart');
+  svg.setAttribute('height', h * 100 + 50 + '');
+  let template;
+  try {
+    template = draw(seq);
+  } catch(err) {
+    alert(err);
+  }
+  svg.innerHTML = template;
+}
