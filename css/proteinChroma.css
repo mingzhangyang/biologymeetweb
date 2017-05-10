@@ -62,6 +62,9 @@ td {
     margin: auto;
     padding-top: 10px;
     /*text-align: center;*/
+    font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.1em;
+    line-height: 150%;
 }
 button {
     /*float: right;*/
@@ -72,6 +75,8 @@ button {
     background-color: #00d6b2;
     border-style: none;
     border-radius: 5px;
+    font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif,  Verdana;
+    font-size: 1em;
 }
 .example {
     background-color: white;
@@ -84,9 +89,6 @@ button {
 }
 tr {
     height: 25px;
-}
-ol {
-    line-height: 150%;
 }
 #chartArea {
     padding-top: 30px;

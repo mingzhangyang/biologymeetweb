@@ -237,6 +237,10 @@ function example(seq) {
 function chroma() {
   let seq = document.getElementById('inputbox').value;
   seq = seq.replace(/\s+/g, '');
+  if (seq.length === 0) {
+    alert('Please input your sequence!');
+    return;
+  }
   let h = Math.ceil(seq.length / 200);
   let svg = document.getElementById('chart');
   svg.setAttribute('height', h * 100 + 50 + '');
