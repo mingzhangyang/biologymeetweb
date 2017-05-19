@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var myc = require('../../../commonUse/web/svgDrawing/myc');
+var myc = require('../../commonUse/web/svgDrawing/myc');
 // console.log(myc);
 
 var pObj = {
