@@ -79,7 +79,11 @@ button {
     font-size: 1em;
 }
 .example {
-    background-color: white;
+    background-color: #67BCDB;
+}
+.example:hover {
+    cursor: pointer;
+    background-color: #007edf;
 }
 #title {
     text-align: center;
