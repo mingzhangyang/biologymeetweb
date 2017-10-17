@@ -1,0 +1,21 @@
+body {
+    background-color: #ebebeb;
+}
+
+#header {
+    height: 120px;
+    background-color: deepskyblue;
+}
+
+#container {
+    margin: 20px auto;
+}
+
+#inputSeq {
+    margin-left: 150px;
+}
+
+#dotMatrix {
+    border: 2px dodgerblue dashed;
+    margin-left: 150px;
+}
