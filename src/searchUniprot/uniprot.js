@@ -93,7 +93,7 @@ function clickShow(elem) {
 }
 
 function getEntry(entry) {
-  var baseUrl = 'http://www.uniprot.org/uniprot/';
+  var baseUrl = 'https://www.uniprot.org/uniprot/';
   $.ajax({
     url: baseUrl + entry + '.fasta',
     method: 'GET',
